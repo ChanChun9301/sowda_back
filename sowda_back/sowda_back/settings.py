@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-z6el!rs_1beoky0^2#q1iof)2$eqlsua43_=%ubt&d&4*-oyz4'
 DEBUG = True
 # ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['127.0.0.1','localhost','10.10.73.81']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','10.10.73.82']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'django_filters',
     "debug_toolbar",
-    'djoser',
+    # 'djoser',
 ]
 
 MIDDLEWARE = [
@@ -65,13 +65,13 @@ DATABASES = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:8000",
-#     "http://127.0.0.1:8000",
-#     "http://localhost:56890",
-#     "http://127.0.0.1:56890",
-#     "http://10.0.2.2:8000",
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://localhost:1651",
+    "http://127.0.0.1:1651",
+    "http://10.0.2.2:8000",
+]
 
 INTERNAL_IPS = [
     # ...
