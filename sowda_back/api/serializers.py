@@ -82,14 +82,14 @@ class LogistDetailSerializer(serializers.ModelSerializer):
     address = serializers.CharField(source='address.name')
     class Meta:
         model = Logist
-        fields = ('pk', 'name', 'address','text','category','phone','price','url','created','img1','img2','img3','img4','img5','checked','images')
+        fields = ('pk', 'name', 'address','text','category','last_date','where','nirder','bring','vip','phone','price','url','created','img1','img2','img3','img4','img5','checked','images')
 
 class LogistListSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source='category.name')
     address_name = serializers.CharField(source='address.name')
     class Meta:
         model = Logist
-        fields = ('pk', 'name', 'text','phone','price','created','img1','checked','address_name','category_name')
+        fields = ('pk', 'name', 'text','phone','price','created','last_date','where','nirder','bring','vip','img1','checked','address_name','category_name')
 
 
 class LogistSerializer(serializers.ModelSerializer):
@@ -108,7 +108,7 @@ class LogistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Logist
-        fields = ('pk', 'name', 'address','text','phone','price','url','created','img1','img2','img3','img4','img5','checked','category')
+        fields = ('pk', 'name', 'address','text','phone','last_date','where','nirder','bring','vip','price','url','created','img1','img2','img3','img4','img5','checked','category')
 
 class ElinDetailSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source='category.name')
