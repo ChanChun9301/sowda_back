@@ -292,7 +292,7 @@ class CarMainList(generics.ListAPIView):
 class CarList(generics.ListCreateAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
-    permission_classes=[IsAdminUser]
+    # permission_classes=[IsAdminUser]
     name = 'car-list'
 
 class CarDetail(generics.RetrieveAPIView):

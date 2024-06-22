@@ -82,7 +82,7 @@ class LogistDetailSerializer(serializers.ModelSerializer):
     address = serializers.CharField(source='address.name')
     class Meta:
         model = Logist
-        fields = ('pk', 'name', 'address','text','category','last_date','where','nirden','bring','vip','phone','price','url','created','img1','img2','img3','img4','img5','checked','images')
+        fields = ('pk', 'name', 'address','text','category','last_date','where','nirden','bring','vip','phone','price','url','created','img1','img2','img3','img4','img5','checked')
 
 class LogistListSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source='category.name')
@@ -223,7 +223,7 @@ class CarSerializer(serializers.ModelSerializer):
         
     class Meta:
         model = Car
-        fields = ('pk', 'name', 'address','text','phone','price','created','img1','img2','img3','img4','img5','checked','category')
+        fields = ('pk', 'name', 'address','author','text','phone','price','created','img1','img2','img3','img4','img5','category')
 
     
 

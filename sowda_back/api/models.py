@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from tinymce.models import HTMLField
 
 # class phoneModel(models.Model):
 #     Mobile = models.IntegerField(blank=False)
@@ -104,7 +105,6 @@ class Logist(models.Model):
     last_date = models.DateField(null=True)
     bring = models.BooleanField(default=False)
     vip = models.BooleanField(default=False)
-    images = models.TextField(blank=True, null=True)
     address = models.ForeignKey(Address,on_delete=models.CASCADE)
     phone = models.CharField(null=True, max_length=100)
     img1 = models.ImageField(upload_to='logistika',null=True)
@@ -112,8 +112,7 @@ class Logist(models.Model):
     img3 = models.ImageField(upload_to='logistika',null=True)
     img4 = models.ImageField(upload_to='logistika',null=True)
     img5 = models.ImageField(upload_to='logistika',null=True)
-    text = models.TextField(blank=True)
-    text = models.TextField(blank=True)
+    text = HTMLField()
     created = models.DateField(auto_now_add=True)
     checked = models.BooleanField(default=False)
     price = models.CharField(null=True, max_length=100)
@@ -160,7 +159,7 @@ class Elin(models.Model):
     img3 = models.ImageField(upload_to='elin',null=True)
     img4 = models.ImageField(upload_to='elin',null=True)
     img5 = models.ImageField(upload_to='elin',null=True)
-    text = models.TextField(blank=True)
+    text = HTMLField()
     created = models.DateField(auto_now_add=True)
     checked = models.BooleanField(default=False)
     price = models.CharField(null=True, max_length=100)
@@ -194,7 +193,7 @@ class Other(models.Model):
     img3 = models.ImageField(upload_to='beylekiler',null=True)
     img4 = models.ImageField(upload_to='beylekiler',null=True)
     img5 = models.ImageField(upload_to='beylekiler',null=True)
-    text = models.TextField(blank=True)
+    text = HTMLField()
     created = models.DateField(auto_now_add=True)
     checked = models.BooleanField(default=False)
     price = models.CharField(null=True, max_length=100)
@@ -228,7 +227,7 @@ class Service(models.Model):
     img3 = models.ImageField(upload_to='hyzmatlar',null=True)
     img4 = models.ImageField(upload_to='hyzmatlar',null=True)
     img5 = models.ImageField(upload_to='hyzmatlar',null=True)
-    text = models.TextField(blank=True)
+    text = HTMLField()
     created = models.DateField(auto_now_add=True)
     checked = models.BooleanField(default=False)
     price = models.CharField(null=True, max_length=100)
@@ -265,7 +264,7 @@ class Car(models.Model):
     img3 = models.ImageField(upload_to='ulaglar',null=True)
     img4 = models.ImageField(upload_to='ulaglar',null=True)
     img5 = models.ImageField(upload_to='ulaglar',null=True)
-    text = models.TextField(blank=True)
+    text = HTMLField()
     created = models.DateField(auto_now_add=True)
     checked = models.BooleanField(default=False)
     price = models.CharField(null=True, max_length=100)
@@ -296,7 +295,7 @@ class News(models.Model):
     author = models.CharField(max_length=150,null=True)
     category = models.ForeignKey(NewsCategory,on_delete=models.CASCADE)
     img = models.ImageField(upload_to='habarlar',null=True)
-    text = models.TextField(blank=True)
+    text = HTMLField()
     created = models.DateField(auto_now_add=True)
     checked = models.BooleanField(default=False)
     

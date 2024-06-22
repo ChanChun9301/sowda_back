@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('api.urls')),
     path("__debug__/", include("debug_toolbar.urls")),
+     path('tinymce/', include('tinymce.urls')),
 ]
 if settings.DEBUG:
 
