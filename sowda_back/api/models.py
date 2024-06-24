@@ -137,12 +137,6 @@ class ElinCategory(models.Model):
     def __str__(self):
         return self.name
 
-Class_Type = (
-    ('hyzmatlar', "Hyzmatlar"),
-    ('elin', "Elin"),
-    ('beýlekiler', "Beýlekiler"),
-)
-
 def image_add(self):
     return f'gosulan_bildiris/{self}'
 
@@ -150,7 +144,6 @@ def image_add(self):
 class Elin(models.Model):
     name = models.CharField(null=True, max_length=100)
     address = models.ForeignKey(Address,on_delete=models.CASCADE)
-    class_type = models.CharField(null=True, max_length=100, choices=Class_Type)
     category = models.ForeignKey(ElinCategory,on_delete=models.CASCADE)
     author = models.CharField(max_length=255,null=True)
     phone = models.CharField(null=True, max_length=100)

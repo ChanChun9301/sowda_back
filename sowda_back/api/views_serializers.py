@@ -6,7 +6,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.reverse import reverse
-from rest_framework.permissions import IsAdminUser
 from rest_framework.authentication import SessionAuthentication,TokenAuthentication
 from django.shortcuts import render
 
@@ -81,7 +80,6 @@ class LogistMainList(generics.ListAPIView):
 class LogistList(generics.ListCreateAPIView):
     queryset = Logist.objects.all()
     serializer_class = LogistSerializer
-    permission_classes = [IsAdminUser]
     name = 'logist-list'
 
 class LogistDetail(generics.RetrieveAPIView):
@@ -151,7 +149,6 @@ class ElinMainList(generics.ListAPIView):
 class ElinList(generics.ListCreateAPIView):
     queryset = Elin.objects.all()
     serializer_class = ElinSerializer
-    permission_classes = [IsAdminUser]
     name = 'elin-list'
 
 class ElinDetail(generics.RetrieveAPIView):
@@ -221,7 +218,6 @@ class OtherMainList(generics.ListAPIView):
 class OtherList(generics.ListCreateAPIView):
     queryset = Other.objects.all()
     serializer_class = OtherSerializer
-    permission_classes=[IsAdminUser]
     name = 'other-list'
 
 class OtherDetail(generics.RetrieveAPIView):
@@ -292,7 +288,6 @@ class CarMainList(generics.ListAPIView):
 class CarList(generics.ListCreateAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
-    # permission_classes=[IsAdminUser]
     name = 'car-list'
 
 class CarDetail(generics.RetrieveAPIView):
@@ -410,7 +405,6 @@ class ServiceList(generics.ListCreateAPIView):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
     name = 'service-list'
-    permission_classes=[IsAdminUser]
 
 class ServiceDetail(generics.RetrieveAPIView):
     queryset = Service.objects.all()

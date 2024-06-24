@@ -111,11 +111,11 @@ class LogistSerializer(serializers.ModelSerializer):
         fields = ('pk', 'name', 'address','text','phone','last_date','where','nirden','bring','vip','price','url','created','img1','img2','img3','img4','img5','checked','category')
 
 class ElinDetailSerializer(serializers.ModelSerializer):
-    category = serializers.CharField(source='category.name')
-    address = serializers.CharField(source='address.name')
+    category_name = serializers.CharField(source='category.name')
+    address_name = serializers.CharField(source='address.name')
     class Meta:
         model = Elin
-        fields = ('pk', 'name', 'address','text','category','phone','price','created','img1','img2','img3','img4','img5','checked')
+        fields = ('pk', 'name', 'address_name','text','category_name','phone','price','created','img1','img2','img3','img4','img5','checked')
 
 class ElinSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source='category.id')
@@ -138,11 +138,11 @@ class ElinSerializer(serializers.ModelSerializer):
         fields = ('pk', 'name', 'address','text','phone','price','created','img1','img2','img3','img4','img5','checked','category')
 
 class ServiceDetailSerializer(serializers.ModelSerializer):
-    category = serializers.CharField(source='category.name')
-    address = serializers.CharField(source='address.name')
+    category_name = serializers.CharField(source='category.name')
+    address_name = serializers.CharField(source='address.name')
     class Meta:
         model = Service
-        fields = ('pk', 'name', 'address','text','category','phone','price','created','img1','img2','img3','img4','img5','checked')
+        fields = ('pk', 'name', 'address_name','text','category_name','phone','price','created','img1','img2','img3','img4','img5','checked')
 
 class ServiceSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source='category.id')
@@ -162,7 +162,7 @@ class ServiceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Service
-        fields = ('pk', 'name', 'address','text','phone','price','created','img1','img2','img3','img4','img5','checked')
+        fields = ('pk', 'name', 'address','author','text','phone','price','created','img1','img2','img3','img4','img5','checked','category')
 
 class OtherDetailSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source='category.name')
