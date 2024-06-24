@@ -165,11 +165,18 @@ class ServiceSerializer(serializers.ModelSerializer):
         fields = ('pk', 'name', 'address','author','text','phone','price','created','img1','img2','img3','img4','img5','checked','category')
 
 class OtherDetailSerializer(serializers.ModelSerializer):
-    category = serializers.CharField(source='category.name')
-    address = serializers.CharField(source='address.name')
+    category = serializers.CharField()
+    address = serializers.CharField()
     class Meta:
         model = Other
-        fields = ('pk', 'name', 'address','text','category','phone','price','created','img1','img2','img3','img4','img5','checked')
+        fields = ('pk', 'name', 'address_name','text','category_name','phone','price','created','img1','img2','img3','img4','img5','checked')
+
+class OtherListSerializer(serializers.ModelSerializer):
+    category_name = serializers.CharField(source='category.name')
+    address_name = serializers.CharField(source='address.name')
+    class Meta:
+        model = Other
+        fields = ('pk', 'name', 'text','phone','price','created','img1','checked','address_name','category_name')
 
 class OtherSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source='category.id')
@@ -189,7 +196,7 @@ class OtherSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Other
-        fields = ('pk', 'name', 'address','text','phone','price','created','img1','img2','img3','img4','img5','checked')
+        fields = ('pk', 'name', 'address','text','phone','price','created','img1','img2','img3','img4','img5','checked','category')
 
 
 class CarDetailSerializer(serializers.ModelSerializer):
