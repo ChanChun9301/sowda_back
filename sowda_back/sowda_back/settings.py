@@ -1,4 +1,7 @@
 from pathlib import Path
+from django.templatetags.static import static
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,6 +12,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1','localhost','10.10.73.81']
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -20,12 +24,111 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     # 'imagekit',
-    'api.apps.ApiConfig',
+    # 'djoser',
     'django_filters',
     "debug_toolbar",
-    # 'djoser',
-]
 
+    'api',
+    'car',
+    'other',
+    'logist',
+    'service',
+    'elin',
+]
+# UNFOLD = {
+#     "SITE_TITLE": 'Seýir',
+#     "SITE_HEADER": 'Seýir',
+#     "SITE_URL": "/",
+#     "SITE_ICON": lambda request: static("logo.svg"),
+#     "DASHBOARD_CALLBACK": "sowda_back.dashboard_callback",
+#     "LOGIN": {
+#         "image": lambda r: static("sample/login-bg.jpg"),
+#         # "redirect_after": lambda r: reverse_lazy("admin:APP_MODEL_changelist"),
+#     },
+#     "STYLES": [
+#         lambda request: static("css/style.css"),
+#     ],
+#     "SCRIPTS": [
+#         lambda request: static("js/script.js"),
+#     ],
+#     "COLORS": {
+#         "primary": {
+#             "50": "250 245 255",
+#             "100": "243 232 255",
+#             "200": "233 213 255",
+#             "300": "216 180 254",
+#             "400": "192 132 252",
+#             "500": "168 85 247",
+#             "600": "147 51 234",
+#             "700": "126 34 206",
+#             "800": "107 33 168",
+#             "900": "88 28 135",
+#         },
+#     },
+#     "EXTENSIONS": {
+#         "modeltranslation": {
+#             "flags": {
+#                 "en": "🇬🇧",
+#                 "fr": "🇫🇷",
+#                 "nl": "🇧🇪",
+#             },
+#         },
+#     },
+#     "SIDEBAR": {
+#         "show_search": False,  # Search in applications and models names
+#         "show_all_applications": False,  # Dropdown with all applications and models
+#         "navigation": [
+#             {
+#                 "title": _("Navigation"),
+#                 "separator": True,  # Top border
+#                 "items": [
+#                     {
+#                         "title": _("Dashboard"),
+#                         "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
+#                         "link": reverse_lazy("admin:index"),
+#                         "badge": "sowda_back.badge_callback",
+#                     },
+#                     {
+#                         "title": _("Users"),
+#                         "icon": "people",
+#                         "link": reverse_lazy("admin:users_user_changelist"),
+#                     },
+#                 ],
+#             },
+#         ],
+#     },
+#     "TABS": [
+#         {
+#             "models": [
+#                 "app_label.model_name_in_lowercase",
+#             ],
+#             "items": [
+#                 {
+#                     "title": _("Your custom title"),
+#                     "link":reverse_lazy("")
+#                     # "link": reverse_lazy("admin:app_label_model_name_changelist"),
+#                 },
+#             ],
+#         },
+#     ],
+# }
+
+
+# def dashboard_callback(request, context):
+#     """
+#     Callback to prepare custom variables for index template which is used as dashboard
+#     template. It can be overridden in application by creating custom admin/index.html.
+#     """
+#     context.update(
+#         {
+#             "sample": "example",  # this will be injected into templates/admin/index.html
+#         }
+#     )
+#     return context
+
+
+# def badge_callback(request):
+#     return 3
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

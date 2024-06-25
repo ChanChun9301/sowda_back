@@ -1,5 +1,10 @@
 from django.contrib import admin
 from .models import *
+from elin.models import *
+from service.models import *
+from other.models import *
+from logist.models import *
+from car.models import *
 from django.utils.safestring import mark_safe
 from django.contrib.admin.views.main import ChangeList
 
@@ -80,7 +85,6 @@ admin.site.register(TopProducts, TopProductsAdmin)
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(CarouselImage)
 admin.site.register(Address)
-# admin.site.register(phoneModel)
 admin.site.register(UserProd    )
 admin.site.register(CarCategory)
 admin.site.register(ElinCategory)
@@ -91,6 +95,3 @@ admin.site.register(OtherCategory)
 
 admin.site.site_title = 'Seýir'
 admin.site.site_header = 'Seýir'
-
-
-456
