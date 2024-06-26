@@ -1,6 +1,5 @@
 from django.db import models
 from api.models import Address
-from tinymce.models import HTMLField
 
 class ServiceCategory(models.Model):
     name = models.CharField(null=True, max_length=100)
@@ -26,7 +25,7 @@ class Service(models.Model):
     img3 = models.ImageField(upload_to=image_add_hyzmat,null=True)
     img4 = models.ImageField(upload_to=image_add_hyzmat,null=True)
     img5 = models.ImageField(upload_to=image_add_hyzmat,null=True)
-    text = HTMLField()
+    text = models.TextField(blank=True)
     created = models.DateField(auto_now_add=True)
     checked = models.BooleanField(default=False)
     price = models.CharField(null=True, max_length=100)

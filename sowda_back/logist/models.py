@@ -1,5 +1,4 @@
 from django.db import models
-from tinymce.models import HTMLField
 from api.models import Address
 
 class LogistCategory(models.Model):
@@ -31,7 +30,7 @@ class Logist(models.Model):
     img3 = models.ImageField(upload_to=image_add_logist,null=True)
     img4 = models.ImageField(upload_to=image_add_logist,null=True)
     img5 = models.ImageField(upload_to=image_add_logist,null=True)
-    text = HTMLField()
+    text = models.TextField(blank=True)
     created = models.DateField(auto_now_add=True)
     checked = models.BooleanField(default=False)
     price = models.CharField(null=True, max_length=100)

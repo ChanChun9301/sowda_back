@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from tinymce.models import HTMLField
 
 class UserProd(AbstractUser):
     author = models.CharField(max_length=23,null=True)
@@ -65,11 +64,12 @@ class News(models.Model):
     author = models.CharField(max_length=150,null=True)
     category = models.ForeignKey(NewsCategory,on_delete=models.CASCADE)
     img = models.ImageField(upload_to=image_add_habar,null=True)
-    text = HTMLField()
+    text = models.TextField(blank=True)
     created = models.DateField(auto_now_add=True)
     checked = models.BooleanField(default=False)
     
     class Meta:
+        # app_label = 'Habarlar'
         verbose_name = ("Habar")
         verbose_name_plural = ("Habarlar")
 
