@@ -21,7 +21,7 @@ class Address(models.Model):
         return self.name
 
 def image_add_top(self,filename):
-    return f'top_product/{self.name}/{filename}'
+    return f'top_product/{self.created}-{self.name}/{filename}'
 
 class TopProducts(models.Model):
     name = models.CharField(null=True, max_length=100)
@@ -57,7 +57,7 @@ class NewsCategory(models.Model):
         return self.name
 
 def image_add_habar(self,filename):
-    return f'habarlar/{self.name}/{filename}'
+    return f'habarlar/{self.created}-{self.name}/{filename}'
 
 class News(models.Model):
     name = models.CharField(null=True, max_length=100)

@@ -12,7 +12,7 @@ class OtherCategory(models.Model):
         return self.name
 
 def image_add_beyleki(self,filename):
-    return f'beyleki/{self.name}/{filename}'
+    return f'beyleki/{self.created}-{self.name}/{filename}'
 
 class Other(models.Model):
     name = models.CharField(null=True, max_length=100)

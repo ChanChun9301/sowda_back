@@ -12,7 +12,7 @@ class CarCategory(models.Model):
         return self.name
 
 def image_add_car(self,filename):
-    return f'awtoulaglar/{self.name}/{filename}'
+    return f'awtoulaglar/{self.created}-{self.name}/{filename}'
 
 class Car(models.Model):
     name = models.CharField(null=True, max_length=100)

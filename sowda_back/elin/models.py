@@ -12,7 +12,7 @@ class ElinCategory(models.Model):
         return self.name
 
 def image_add_elin(self,filename):
-    return f'elin/{self.name}/{filename}'
+    return f'elin/{self.created}-{self.name}/{filename}'
 
 class Elin(models.Model):
     name = models.CharField(null=True, max_length=100)

@@ -12,7 +12,7 @@ class ServiceCategory(models.Model):
         return self.name
 
 def image_add_hyzmat(self,filename):
-    return f'hyzmatlar/{self.name}/{filename}'
+    return f'hyzmatlar/{self.created}-{self.name}/{filename}'
 
 class Service(models.Model):
     name = models.CharField(null=True, max_length=100)

@@ -8,8 +8,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-z6el!rs_1beoky0^2#q1iof)2$eqlsua43_=%ubt&d&4*-oyz4'
 DEBUG = True
-ALLOWED_HOSTS = ['*']
-# ALLOWED_HOSTS = ['127.0.0.1','localhost','10.10.73.81']
+# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','10.10.73.56']
 
 INSTALLED_APPS = [
     'jazzmin',

@@ -12,7 +12,7 @@ class LogistCategory(models.Model):
         return self.name
 
 def image_add_logist(self,filename):
-    return f'logistika/{self.name}/{filename}'
+    return f'logistika/{self.created}-{self.name}/{filename}'
 
 class Logist(models.Model):
     name = models.CharField(null=True, max_length=100)
