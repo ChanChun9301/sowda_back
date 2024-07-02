@@ -38,4 +38,4 @@ class LogistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Logist
-        fields = ('pk', 'name', 'address','text','phone','last_date','where','nirden','bring','vip','price','url','created','img1','img2','img3','img4','img5','checked','category')
+        fields = ('pk', 'name', 'author','address','text','phone','last_date','where','nirden','bring','vip','price','url','created','img1','img2','img3','img4','img5','checked','category')

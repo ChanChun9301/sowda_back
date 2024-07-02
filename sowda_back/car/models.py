@@ -17,9 +17,9 @@ def image_add_car(self,filename):
 class Car(models.Model):
     name = models.CharField(null=True, max_length=100)
     address = models.ForeignKey(Address,on_delete=models.CASCADE)
-    author = models.CharField(max_length=255,null=True)
+    author = models.CharField(max_length=8,null=True)
     category = models.ForeignKey(CarCategory,on_delete=models.CASCADE)
-    phone = models.CharField(null=True, max_length=100)
+    phone = models.CharField(null=True, max_length=8)
     img1 = models.ImageField(upload_to=image_add_car,null=True)
     img2 = models.ImageField(upload_to=image_add_car,null=True)
     img3 = models.ImageField(upload_to=image_add_car,null=True)

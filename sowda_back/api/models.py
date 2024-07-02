@@ -1,8 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 
-class UserProd(AbstractUser):
-    author = models.CharField(max_length=23,null=True)
+class UserProd(models.Model):
+    author = models.CharField(max_length=11,null=True)
+    checked = models.BooleanField(default=False)
     
     class Meta:
         verbose_name = ("Ulanyjy")

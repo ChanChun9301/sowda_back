@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     "debug_toolbar",
+    'rest_framework.authtoken',
 
     'api',
     'car',
@@ -93,6 +94,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+    'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
 LANGUAGE_CODE = 'ru-ru'
 TIME_ZONE = 'UTC'
 USE_I18N = True
@@ -105,4 +112,3 @@ MEDIA_URL='/media/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = "api.UserProd"

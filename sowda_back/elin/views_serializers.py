@@ -27,6 +27,19 @@ class ElinAddList(generics.ListAPIView):
     filter_backends = [filters.SearchFilter]
     search_fields = ['author']
     name = 'elin-added-list'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        author = self.request.query_params.get('author')
+
+        print(author)
+        if author:
+            author = str(author) 
+            queryset = queryset.filter(author=author)
+        else:
+            queryset=[]
+
+        return queryset
     
 class ElinList(generics.ListCreateAPIView):
     queryset = Elin.objects.all()

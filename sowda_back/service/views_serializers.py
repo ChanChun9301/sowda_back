@@ -28,6 +28,19 @@ class ServiceAddList(generics.ListAPIView):
     search_fields = ['author']
     name = 'service-added-list'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        author = self.request.query_params.get('author')
+
+        print(author)
+        if author:
+            author = str(author) 
+            queryset = queryset.filter(author=author)
+        else:
+            queryset=[]
+
+        return queryset
+
 class ServiceList(generics.ListCreateAPIView):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer

@@ -26,8 +26,20 @@ class LogistAddList(generics.ListAPIView):
     queryset = Logist.objects.all()
     serializer_class = LogistSerializer
     search_fields = ['author']
-    ordering_fields = ['created']
     name = 'logist-added-list'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        author = self.request.query_params.get('author')
+
+        print(author)
+        if author:
+            author = str(author) 
+            queryset = queryset.filter(author=author)
+        else:
+            queryset=[]
+
+        return queryset
 
 class LogistList(generics.ListCreateAPIView):
     queryset = Logist.objects.all()

@@ -8,6 +8,62 @@ from service.views_serializers import *
 from logist.views_serializers import *
 from other.views_serializers import *
 from elin.views_serializers import *
+from rest_framework.views import APIView
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User
+
+class UserLoginAPIView(APIView):
+    def post(self, request, *args, **kargs):
+        serializer = UserLoginSerializer(data=request.data)
+        if serializer.is_valid():
+            response = {
+                "username": {
+                    "detail": "User Doesnot exist!"
+                }
+            }
+            if User.objects.filter(username=request.data['username']).exists():
+                user = User.objects.get(username=request.data['username'])
+                token, created = Token.objects.get_or_create(user=user)
+                response = {
+                    'success': True,
+                    'token': token.key
+                }
+                return Response(response, status=status.HTTP_200_OK)
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserLogoutAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args):
+        token = Token.objects.get(user=request.user)
+        token.delete()
+        return Response({"success": True, "detail": "Logged out!"}, status=status.HTTP_200_OK)
+
+class UserPost(generics.ListCreateAPIView):
+    queryset = UserProd.objects.all()
+    serializer_class = UserSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['author']
+    name = 'user'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        author = self.request.query_params.get('author')
+
+        # if checked:
+        #     checked = bool(checked) 
+        #     queryset = queryset.get(checked=checked)
+        # else:
+        #     queryset= {'token':False}
+
+        return queryset
+
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserProd.objects.all()
+    serializer_class = UserSerializer
+    name = 'userprod-detail'
 
 class AddressDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Address.objects.all()
@@ -107,6 +163,7 @@ class ApiRoot(generics.GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         return Response({
+            'user': reverse(UserPost.name, request=request),
             'top': reverse(TopProductsList.name, request=request),
             'address': reverse(AddressList.name, request=request),
 
