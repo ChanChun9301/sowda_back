@@ -9,61 +9,26 @@ from logist.views_serializers import *
 from other.views_serializers import *
 from elin.views_serializers import *
 from rest_framework.views import APIView
-from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth.models import User
-
-class UserLoginAPIView(APIView):
-    def post(self, request, *args, **kargs):
-        serializer = UserLoginSerializer(data=request.data)
-        if serializer.is_valid():
-            response = {
-                "username": {
-                    "detail": "User Doesnot exist!"
-                }
-            }
-            if User.objects.filter(username=request.data['username']).exists():
-                user = User.objects.get(username=request.data['username'])
-                token, created = Token.objects.get_or_create(user=user)
-                response = {
-                    'success': True,
-                    'token': token.key
-                }
-                return Response(response, status=status.HTTP_200_OK)
-            return Response(response, status=status.HTTP_400_BAD_REQUEST)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class UserLogoutAPIView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, *args):
-        token = Token.objects.get(user=request.user)
-        token.delete()
-        return Response({"success": True, "detail": "Logged out!"}, status=status.HTTP_200_OK)
+from django.http import JsonResponse
 
 class UserPost(generics.ListCreateAPIView):
     queryset = UserProd.objects.all()
     serializer_class = UserSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['author']
-    name = 'user'
+    name = 'userprod-list'
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        author = self.request.query_params.get('author')
-
-        # if checked:
-        #     checked = bool(checked) 
-        #     queryset = queryset.get(checked=checked)
-        # else:
-        #     queryset= {'token':False}
-
-        return queryset
-
-class UserDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = UserProd.objects.all()
-    serializer_class = UserSerializer
-    name = 'userprod-detail'
+class UserProdDetailView(APIView):
+    def get(self, request):
+        author = request.GET.get('author')
+        if author:
+            try:
+                check = UserProd.objects.get(author=author)
+                return Response({'token': check.checked})
+            except UserProd.DoesNotExist:
+                return Response({'token': False})
+        else:
+            return Response({'token': False})
 
 class AddressDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Address.objects.all()

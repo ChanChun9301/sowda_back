@@ -12,6 +12,10 @@ class CarouselImage(models.Model):
     name = models.CharField(max_length=150)
     img = models.ImageField(upload_to='carousel',null=True)
 
+    class Meta:
+        verbose_name = ("Banner surat")
+        verbose_name_plural = ("Banner suratlar")
+
     def __str__(self):
         return self.name
 

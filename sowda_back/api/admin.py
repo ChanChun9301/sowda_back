@@ -81,11 +81,14 @@ class TopProductsAdmin(admin.ModelAdmin):
         else:
             return 'Surat goyulmadyk'
 
+class UserAdmin(admin.ModelAdmin):
+    list_display=('author','checked')
+
 admin.site.register(TopProducts, TopProductsAdmin)
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(CarouselImage)
 admin.site.register(Address)
-admin.site.register(UserProd    )
+admin.site.register(UserProd,UserAdmin)
 admin.site.register(CarCategory)
 admin.site.register(ElinCategory)
 admin.site.register(LogistCategory)
