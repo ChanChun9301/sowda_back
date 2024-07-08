@@ -7,7 +7,7 @@ from other.views_serializers import *
 from service.views_serializers import *
 
 urlpatterns = [
-    re_path(r'^userprod-list/$', UserPost.as_view(), name=UserPost.name),
+    re_path(r'^userprod-list/$', UserCreate.as_view(), name=UserCreate.name),
     re_path(r'^user-check/$', UserProdDetailView.as_view(), name='login'),
 
     # re_path(r'^userprod-detail/(?P<pk>[0-9]+)$', UserDetail.as_view(), name=UserDetail.name),

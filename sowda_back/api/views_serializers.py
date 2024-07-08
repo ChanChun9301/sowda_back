@@ -18,12 +18,28 @@ class UserPost(generics.ListCreateAPIView):
     search_fields = ['author']
     name = 'userprod-list'
 
+class UserCreate(APIView):
+    name = 'userprod-list'
+    def post(self, request):
+        data = request.data
+        if UserProd.objects.filter(author=data['author']).exists():
+            return Response({'author': data['author']})
+        serializer = UserSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class UserProdDetailView(APIView):
     def get(self, request):
         author = request.GET.get('author')
         if author:
             try:
                 check = UserProd.objects.get(author=author)
+                if UserProd.objects.filter(author=author).exists():
+                    return Response({'token': True})
                 return Response({'token': check.checked})
             except UserProd.DoesNotExist:
                 return Response({'token': False})
