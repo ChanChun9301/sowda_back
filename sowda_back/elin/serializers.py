@@ -31,4 +31,4 @@ class ElinSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Elin
-        fields = ('pk', 'name', 'address','text','phone','price','created','img1','img2','img3','img4','img5','checked','category')
+        fields = ('pk', 'name', 'address','text','phone','price','created','img1','img2','img3','img4','img5','checked','category','author')

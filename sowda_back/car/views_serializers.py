@@ -31,7 +31,6 @@ class CarAddList(generics.ListAPIView):
         queryset = super().get_queryset()
         author = self.request.query_params.get('author')
 
-        print(author)
         if author:
             author = str(author) 
             queryset = queryset.filter(author=author)

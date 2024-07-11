@@ -24,7 +24,6 @@ class OtherMainList(generics.ListAPIView):
 class OtherAddList(generics.ListAPIView):
     queryset = Other.objects.all()
     serializer_class = OtherSerializer
-    filter_backends = [filters.SearchFilter]
     search_fields = ['author']
     name = 'other-added-list'
 
