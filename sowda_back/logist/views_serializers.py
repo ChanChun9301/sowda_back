@@ -6,8 +6,8 @@ from api.serializers import *
 class LogistMainList(generics.ListAPIView):
     queryset = Logist.objects.all()
     serializer_class = LogistSerializer
-    filter_backends = [filters.SearchFilter]
-    filterset_fields = ['checked']
+    # filter_backends = [filters.SearchFilter]
+    # filterset_fields = ['checked','bring']
     search_fields = ['name']
     ordering_fields = ['created']
     name = 'logistmain-list'
@@ -15,10 +15,24 @@ class LogistMainList(generics.ListAPIView):
     def get_queryset(self):
         queryset = super().get_queryset()
         checked = self.request.query_params.get('checked')
+        nirden = self.request.query_params.get('nirden')
+        where = self.request.query_params.get('where')
+        bring = self.request.query_params.get('bring')
+        category = self.request.query_params.get('category')
+        
 
         if checked is not None:
             checked = bool(checked) 
             queryset = queryset.filter(checked=checked)
+        if nirden is not None:
+            queryset=queryset.filter(nirden__icontains=nirden)
+        if where is not None:
+            queryset=queryset.filter(where__icontains=where)
+        if category is not None:
+            category = int(category)             
+            queryset=queryset.filter(category=category)
+        if bring is not None:
+            queryset=queryset.filter(bring=bring)
 
         return queryset
 

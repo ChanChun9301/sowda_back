@@ -2,14 +2,21 @@ from pathlib import Path
 from django.templatetags.static import static
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+import socket
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-z6el!rs_1beoky0^2#q1iof)2$eqlsua43_=%ubt&d&4*-oyz4'
 DEBUG = True
-# ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['127.0.0.1','localhost','10.10.73.56']
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['127.0.0.1','localhost','10.10.73.56']
+
+
+# try:
+#     HOSTNAME = socket.gethostname()
+# except:
+HOSTNAME = 'http://192.168.0.103:8000'
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -22,8 +29,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'django_filters',
-    "debug_toolbar",
-    'rest_framework.authtoken',
+    # "debug_toolbar",
+    # 'rest_framework.authtoken',
 
     'api',
     'car',
@@ -42,7 +49,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "corsheaders.middleware.CorsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'sowda_back.urls'
@@ -76,9 +83,9 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "http://localhost:60058",
-    "http://127.0.0.1:60058",
-    "http://10.0.2.2:8000",
+    "http://localhost:57793",
+    "http://127.0.0.1:57793",
+    "http://192.168.0.103:8000",
 ]
 
 INTERNAL_IPS = [
@@ -112,3 +119,8 @@ MEDIA_URL='/media/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}

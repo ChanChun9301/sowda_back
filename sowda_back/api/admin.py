@@ -8,54 +8,73 @@ from car.models import *
 from django.utils.safestring import mark_safe
 from django.contrib.admin.views.main import ChangeList
 
-class LogistAdmin(admin.ModelAdmin):
-    list_display = ('name','price','phone','img1')
+class LogistImageInline(admin.StackedInline):
+    model = ImageLogist
+    fields = ["img"]
 
-    def get_photo(self, obj):
+class LogistAdmin(admin.ModelAdmin):
+    list_display = ('author','name','price','phone','img','surat','checked')
+    inlines=[LogistImageInline]
+
+    def surat(self, obj):
         if obj.img:
-            return mark_safe(f'<img src="{obj.img1.url}" width="75">')
+            return mark_safe(f'<img src="{obj.img.url}" width="75">')
         else:
             return 'Surat goyulmadyk'
 admin.site.register(Logist, LogistAdmin)
 
+class ElinImageInline(admin.StackedInline):
+    model = ImageElin
+    fields = ["img"]
 
 class ElinAdmin(admin.ModelAdmin):
-    list_display = ('name','price','phone','img1')
+    list_display = ('author','name','price','phone','img','surat','checked')
+    inlines = [ElinImageInline]
 
-    def get_photo(self, obj):
+    def surat(self, obj):
         if obj.img:
-            return mark_safe(f'<img src="{obj.img1.url}" width="75">')
+            return mark_safe(f'<img src="{obj.img.url}" width="75">')
         else:
             return 'Surat goyulmadyk'
 
 admin.site.register(Elin, ElinAdmin)
 
-class OtherAdmin(admin.ModelAdmin):
-    list_display = ('name','price','phone','img1')
+class OtherImageInline(admin.StackedInline):
+    model = ImageOther
+    fields = ["img"]
 
-    def get_photo(self, obj):
+class OtherAdmin(admin.ModelAdmin):
+    list_display = ('author','name','price','phone','img','surat','checked')
+    inlines = [OtherImageInline]
+
+    def surat(self, obj):
         if obj.img:
-            return mark_safe(f'<img src="{obj.img1.url}" width="75">')
+            return mark_safe(f'<img src="{obj.img.url}" width="75">')
         else:
             return 'Surat goyulmadyk'
 
 admin.site.register(Other, OtherAdmin)
 
-class CarAdmin(admin.ModelAdmin):
-    list_display = ('checked','name','price','phone','img1')
+class CarImageInline(admin.StackedInline):
+    model = ImageCar
+    fields = ["img"]
 
-    def get_photo(self, obj):
-        if obj.img1:
-            return mark_safe(f'<img src="{obj.img1.url}" width="75">')
+class CarAdmin(admin.ModelAdmin):
+    list_display = ('author','name','price','phone','img','surat','checked')
+    inlines = [CarImageInline]
+
+    def surat(self, obj):
+        if obj.img:
+            return mark_safe(f'<img src="{obj.img.url}" width="75">')
         else:
             return 'Surat goyulmadyk'
 
 admin.site.register(Car, CarAdmin)
 
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ('name','img')
+    list_display = ('name','img','surat','checked')
 
-    def get_photo(self, obj):
+    def surat(self, obj):
         if obj.img:
             return mark_safe(f'<img src="{obj.img.url}" width="75">')
         else:
@@ -63,21 +82,31 @@ class NewsAdmin(admin.ModelAdmin):
 
 admin.site.register(News, NewsAdmin)
 
+class ServiceImageInline(admin.StackedInline):
+    model = ImageService
+    fields = ["img"]
+
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('name','price','phone','img1')
+    list_display = ('author','name','price','phone','img','surat','checked')
+    inlines = [ServiceImageInline]
     
-    def get_photo(self, obj):
+    def surat(self, obj):
         if obj.img:
-            return mark_safe(f'<img src="{obj.img1.url}" width="75">')
+            return mark_safe(f'<img src="{obj.img.url}" width="75">')
         else:
             return 'Surat goyulmadyk'
 
+class TopImageInline(admin.StackedInline):
+    model = ImageTop
+    fields = ["img"]
+
 class TopProductsAdmin(admin.ModelAdmin):
-    list_display = ('name','price','phone','img1')
+    list_display = ('author','name','price','phone','img','surat','checked')
+    inlines = [TopImageInline]
     
-    def get_photo(self, obj):
+    def surat(self, obj):
         if obj.img:
-            return mark_safe(f'<img src="{obj.img1.url}" width="75">')
+            return mark_safe(f'<img src="{obj.img.url}" width="75">')
         else:
             return 'Surat goyulmadyk'
 
@@ -85,6 +114,7 @@ class UserAdmin(admin.ModelAdmin):
     list_display=('author','checked')
 
 admin.site.register(TopProducts, TopProductsAdmin)
+admin.site.register(ImageTop)
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(CarouselImage)
 admin.site.register(Address)

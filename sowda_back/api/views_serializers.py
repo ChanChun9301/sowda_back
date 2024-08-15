@@ -9,7 +9,6 @@ from logist.views_serializers import *
 from other.views_serializers import *
 from elin.views_serializers import *
 from rest_framework.views import APIView
-from django.http import JsonResponse
 
 class UserPost(generics.ListCreateAPIView):
     queryset = UserProd.objects.all()
@@ -39,7 +38,8 @@ class UserProdDetailView(APIView):
             try:
                 check = UserProd.objects.get(author=author)
                 if UserProd.objects.filter(author=author).exists():
-                    return Response({'token': True})
+                    if (UserProd.objects.filter(checked=True)):
+                        return Response({'token': check.checked})
                 return Response({'token': check.checked})
             except UserProd.DoesNotExist:
                 return Response({'token': False})
@@ -102,13 +102,25 @@ class NewsByCategoryList(generics.ListAPIView):
         return queryset
 
 #------------------------------------
+class ImageList(generics.ListAPIView):
+    queryset = ImageTop.objects.all()
+    serializer_class = ImageSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name', 'top']
+    name = 'imagetop-list'
+
+class ImageDetail(generics.RetrieveAPIView):
+    queryset = ImageTop.objects.all()
+    serializer_class = ImageSerializer
+    name = 'imagetop-detail'
+
 
 class TopProductsList(generics.ListAPIView):
     queryset = TopProducts.objects.all()
     serializer_class = TopProductsSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
-    name = 'top-list'
+    name = 'topmain-list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -123,7 +135,7 @@ class TopProductsList(generics.ListAPIView):
 class TopProductsDetail(generics.RetrieveAPIView):
     queryset = TopProducts.objects.all()
     serializer_class =TopProductDetailSerializer
-    name = 'top-detail'
+    name = 'topmain-detail'
 
 #------------------------------------
 
@@ -139,6 +151,10 @@ class CarouselDetail(generics.RetrieveAPIView):
     serializer_class = CarouselSerializer
     name = 'carousel-detail'
 
+
+
+
+
 class ApiRoot(generics.GenericAPIView):
     name = 'Seýir'
 
@@ -146,6 +162,7 @@ class ApiRoot(generics.GenericAPIView):
         return Response({
             'user': reverse(UserPost.name, request=request),
             'top': reverse(TopProductsList.name, request=request),
+            'imagetop': reverse(ImageList.name, request=request),
             'address': reverse(AddressList.name, request=request),
 
             'logist': reverse(LogistMainList.name, request=request),

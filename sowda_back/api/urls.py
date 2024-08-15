@@ -1,5 +1,6 @@
 from django.urls import re_path,path
 from .views_serializers import *
+from .views import *
 from logist.views_serializers import *
 from car.views_serializers import *
 from elin.views_serializers import *
@@ -7,6 +8,21 @@ from other.views_serializers import *
 from service.views_serializers import *
 
 urlpatterns = [
+    path('app/',index,name='index'),
+    path('app/logist/',logist,name='logist'),
+    path('app/logist/<int:pk>/',logist_detail,name='logist'),
+    path('app/car/',car,name='car'),
+    path('app/car/<int:pk>/',car_detail,name='car'),
+    path('app/elin/',elin,name='elin'),
+    path('app/elin/<int:pk>/',elin_detail,name='elin'),
+    path('app/other/',other_detail,name='other'),
+    path('app/other/<int:pk>/',other_detail,name='other'),
+    path('app/service/',service,name='service'),
+    path('app/service/<int:pk>/',service_detail,name='service'),
+    path('app/news/',news,name='news'),
+    path('app/news/<int:pk>/',news_detail,name='news'),
+
+
     re_path(r'^userprod-list/$', UserCreate.as_view(), name=UserCreate.name),
     re_path(r'^user-check/$', UserProdDetailView.as_view(), name='login'),
 
@@ -16,7 +32,9 @@ urlpatterns = [
     re_path(r'^address-list/(?P<pk>[0-9]+)$', AddressDetail.as_view(), name=AddressDetail.name),
 
     re_path(r'^topmain-list/$', TopProductsList.as_view(), name=TopProductsList.name),
-    re_path(r'^top-list/(?P<pk>[0-9]+)$', TopProductsDetail.as_view(), name=TopProductsDetail.name),
+    re_path(r'^topmain-list/(?P<pk>[0-9]+)$', TopProductsDetail.as_view(), name=TopProductsDetail.name),
+    re_path(r'^imagetop-list/$', ImageList.as_view(), name=ImageList.name),
+    re_path(r'^imagetop-list/(?P<pk>[0-9]+)$', ImageDetail.as_view(), name=ImageDetail.name),
 
     re_path(r'^news-list/$', NewsList.as_view(), name=NewsList.name),
     re_path(r'^news-list/(?P<pk>[0-9]+)$', NewsDetail.as_view(), name=NewsDetail.name),

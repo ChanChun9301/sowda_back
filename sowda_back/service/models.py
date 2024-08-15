@@ -1,5 +1,6 @@
 from django.db import models
 from api.models import Address
+from django.conf import settings
 
 class ServiceCategory(models.Model):
     name = models.CharField(null=True, max_length=100)
@@ -19,20 +20,30 @@ class Service(models.Model):
     address = models.ForeignKey(Address,on_delete=models.CASCADE)
     category = models.ForeignKey(ServiceCategory,on_delete=models.CASCADE)
     author = models.CharField(max_length=8,null=True)
-    phone = models.CharField(null=True, max_length=8)
-    img1 = models.ImageField(upload_to=image_add_hyzmat,null=True)
-    img2 = models.ImageField(upload_to=image_add_hyzmat,null=True)
-    img3 = models.ImageField(upload_to=image_add_hyzmat,null=True)
-    img4 = models.ImageField(upload_to=image_add_hyzmat,null=True)
-    img5 = models.ImageField(upload_to=image_add_hyzmat,null=True)
+    phone = models.IntegerField(null=True)
+    img = models.ImageField(upload_to=image_add_hyzmat,null=True)
     text = models.TextField(blank=True)
     created = models.DateField(auto_now_add=True)
     checked = models.BooleanField(default=False)
-    price = models.CharField(null=True, max_length=100)
+    price = models.DecimalField(null=True,  max_digits=10,decimal_places=2,)
     
     class Meta:
+        ordering= ['-created','checked']
         verbose_name = ("Hyzmatlar")
         verbose_name_plural = ("Hyzmatlar")
 
     def __str__(self):
         return self.name
+
+class ImageService(models.Model):
+    service = models.ForeignKey(Service,on_delete=models.CASCADE,verbose_name='Haryt',null=True,related_name='images')
+    img = models.ImageField(upload_to=image_add_hyzmat,null=True,verbose_name='Surat')
+    created = models.DateField(auto_now_add=True,verbose_name='Döredilen wagty',null=True)
+
+    class Meta:
+        ordering= ['created']
+        verbose_name = ("Hyzmat surat")
+        verbose_name_plural = ("Hyzmat suratlar")
+
+    def __str__(self):
+        return f'{settings.HOSTNAME}{self.img.url}'

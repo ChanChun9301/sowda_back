@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from api.models import *
 
 class ElinCategory(models.Model):
@@ -12,27 +13,37 @@ class ElinCategory(models.Model):
         return self.name
 
 def image_add_elin(self,filename):
-    return f'elin/{self.created}-{self.name}/{filename}'
+    return f'elin/{self.created}-{self.name}{filename}'
 
 class Elin(models.Model):
     name = models.CharField(null=True, max_length=100)
     address = models.ForeignKey(Address,on_delete=models.CASCADE)
     category = models.ForeignKey(ElinCategory,on_delete=models.CASCADE)
     author = models.CharField(max_length=8,null=True)
-    phone = models.CharField(null=True, max_length=8)
-    img1 = models.ImageField(upload_to=image_add_elin,null=True)
-    img2 = models.ImageField(upload_to=image_add_elin,null=True)
-    img3 = models.ImageField(upload_to=image_add_elin,null=True)
-    img4 = models.ImageField(upload_to=image_add_elin,null=True)
-    img5 = models.ImageField(upload_to=image_add_elin,null=True)
+    phone = models.IntegerField(null=True)
+    img = models.ImageField(upload_to=image_add_elin,null=True)
     text = models.TextField(blank=True)
     created = models.DateField(auto_now_add=True)
     checked = models.BooleanField(default=False)
-    price = models.CharField(null=True, max_length=100)
+    price = models.DecimalField(null=True,  max_digits=10,decimal_places=2,)
     
     class Meta:
+        ordering= ['-created','checked']
         verbose_name = ("Elin")
         verbose_name_plural = ("Elin")
 
     def __str__(self):
         return self.name
+
+class ImageElin(models.Model):
+    elin = models.ForeignKey(Elin,on_delete=models.CASCADE,verbose_name='Haryt',null=True,related_name='images')
+    img = models.ImageField(upload_to=image_add_elin,null=True,verbose_name='Surat')
+    created = models.DateField(auto_now_add=True,verbose_name='Döredilen wagty',null=True)
+
+    class Meta:
+        ordering= ['-created']
+        verbose_name = ("Elin surat")
+        verbose_name_plural = ("Elin suratlar")
+
+    def __str__(self):
+        return f'{settings.HOSTNAME}/{self.img.url}'
