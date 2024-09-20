@@ -1,6 +1,7 @@
 from django.db import models
 from api.models import Address
 from django.conf import settings
+from ckeditor.fields import RichTextField
 
 class CarCategory(models.Model):
     name = models.CharField(null=True, max_length=100)
@@ -23,8 +24,8 @@ class Car(models.Model):
     category = models.ForeignKey(CarCategory,on_delete=models.CASCADE)
     phone = models.IntegerField(null=True,)
     img = models.ImageField(upload_to=image_add_car,null=True)
-    text = models.TextField(blank=True)
-    created = models.DateField(auto_now_add=True)
+    text = RichTextField(null=True)
+    created = models.DateTimeField(auto_now_add=True)
     checked = models.BooleanField(default=False)
     price = models.DecimalField(null=True,  max_digits=10,decimal_places=2,)
     
@@ -40,7 +41,7 @@ class Car(models.Model):
 class ImageCar(models.Model):
     car = models.ForeignKey(Car,on_delete=models.CASCADE,verbose_name='Haryt',null=True,related_name='images')
     img = models.ImageField(upload_to=images_add_car,null=True,verbose_name='Surat')
-    created = models.DateField(auto_now_add=True,verbose_name='Döredilen wagty',null=True)
+    created = models.DateTimeField(auto_now_add=True,verbose_name='Döredilen wagty',null=True)
 
     class Meta:
         ordering= ['created']

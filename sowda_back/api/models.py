@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from ckeditor.fields import RichTextField
 
 class UserProd(models.Model):
     author = models.CharField(max_length=8,null=True,verbose_name='Awtor')
@@ -37,10 +38,10 @@ class TopProducts(models.Model):
     author = models.CharField(max_length=255,null=True,verbose_name='Awtor')
     price = models.DecimalField(null=True, max_digits=10,decimal_places=2,verbose_name='Bahasy')
     address = models.ForeignKey(Address,on_delete=models.CASCADE,verbose_name='Salgy')
-    text = models.TextField(blank=True,verbose_name='Maglumat')
+    text = RichTextField(null=True)
     phone = models.IntegerField(null=True, verbose_name='Telefon belgi')
     img = models.ImageField(upload_to=image_add_top,verbose_name='Surat',null=True,)
-    created = models.DateField(auto_now_add=True,verbose_name='Döredilen wagty')
+    created = models.DateTimeField(auto_now_add=True,verbose_name='Döredilen wagty')
     checked = models.BooleanField(default=False,verbose_name='Barlandy')
     
     class Meta:
@@ -54,7 +55,7 @@ class TopProducts(models.Model):
 class ImageTop(models.Model):
     top = models.ForeignKey(TopProducts,on_delete=models.CASCADE,verbose_name='Haryt',null=True,related_name='images')
     img = models.ImageField(upload_to=images_add_top,null=True,verbose_name='Surat')
-    created = models.DateField(auto_now_add=True,verbose_name='Döredilen wagty',null=True)
+    created = models.DateTimeField(auto_now_add=True,verbose_name='Döredilen wagty',null=True)
 
     class Meta:
         verbose_name = ("Saýlanan surat")
@@ -81,8 +82,8 @@ class News(models.Model):
     author = models.CharField(max_length=150,null=True,verbose_name='Awtor')
     category = models.ForeignKey(NewsCategory,on_delete=models.CASCADE,verbose_name='Kategoriýa')
     img = models.ImageField(upload_to=image_add_habar,null=True,verbose_name='Surat')
-    text = models.TextField(blank=True,verbose_name='Maglumat')
-    created = models.DateField(auto_now_add=True,verbose_name='Döredilen wagty')
+    text = RichTextField(null=True)
+    created = models.DateTimeField(auto_now_add=True,verbose_name='Döredilen wagty')
     checked = models.BooleanField(default=False,verbose_name='Barlandy')
     
     class Meta:

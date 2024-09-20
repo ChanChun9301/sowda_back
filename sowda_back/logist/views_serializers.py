@@ -1,15 +1,20 @@
-from rest_framework import generics,filters,status
+from rest_framework import generics,filters,pagination
 from .models import *
 from .serializers import *
 from api.serializers import *
 
+class MyPagination(pagination.PageNumberPagination):
+    page_size = 12
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
 class LogistMainList(generics.ListAPIView):
     queryset = Logist.objects.all()
+    pagination_class = MyPagination
     serializer_class = LogistSerializer
-    # filter_backends = [filters.SearchFilter]
-    # filterset_fields = ['checked','bring']
+    filter_backends = [filters.SearchFilter]
     search_fields = ['name']
-    ordering_fields = ['created']
+    ordering_fields = ['created']   
     name = 'logistmain-list'
 
     def get_queryset(self):
@@ -39,6 +44,7 @@ class LogistMainList(generics.ListAPIView):
 class LogistAddList(generics.ListAPIView):
     queryset = Logist.objects.all()
     serializer_class = LogistSerializer
+    pagination_class = MyPagination
     search_fields = ['author']
     name = 'logist-added-list'
 
@@ -56,6 +62,7 @@ class LogistAddList(generics.ListAPIView):
         return queryset
 
 class LogistList(generics.ListCreateAPIView):
+    pagination_class = MyPagination
     queryset = Logist.objects.all()
     serializer_class = LogistSerializer
     name = 'logist-list'
@@ -73,6 +80,7 @@ class LogistCategoryList(generics.ListAPIView):
 class LogistByCategoryList(generics.ListAPIView):
     category=LogistCategorySerializer
     queryset = Logist.objects.all()
+    pagination_class = MyPagination
     serializer_class = LogistSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['category__name']
@@ -92,6 +100,7 @@ class LogistByAddressList(generics.ListAPIView):
     address=AddressSerializer
     queryset = Logist.objects.all()
     serializer_class = LogistSerializer
+    pagination_class = MyPagination
     filter_backends = [filters.SearchFilter]
     search_fields = ['address__name']
     name = 'logist_by_address-list'

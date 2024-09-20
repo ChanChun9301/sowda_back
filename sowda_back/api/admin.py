@@ -60,7 +60,7 @@ class CarImageInline(admin.StackedInline):
     fields = ["img"]
 
 class CarAdmin(admin.ModelAdmin):
-    list_display = ('author','name','price','phone','img','surat','checked')
+    list_display = ('author','created','name','price','phone','img','surat','checked')
     inlines = [CarImageInline]
 
     def surat(self, obj):
@@ -101,8 +101,17 @@ class TopImageInline(admin.StackedInline):
     fields = ["img"]
 
 class TopProductsAdmin(admin.ModelAdmin):
-    list_display = ('author','name','price','phone','img','surat','checked')
+    list_display = ('name','author','price','phone','img','surat','checked')
     inlines = [TopImageInline]
+    
+    def surat(self, obj):
+        if obj.img:
+            return mark_safe(f'<img src="{obj.img.url}" width="75">')
+        else:
+            return 'Surat goyulmadyk'
+
+class CarouselAdmin(admin.ModelAdmin):
+    list_display = ('name','pk','surat')
     
     def surat(self, obj):
         if obj.img:
@@ -116,7 +125,7 @@ class UserAdmin(admin.ModelAdmin):
 admin.site.register(TopProducts, TopProductsAdmin)
 admin.site.register(ImageTop)
 admin.site.register(Service, ServiceAdmin)
-admin.site.register(CarouselImage)
+admin.site.register(CarouselImage,CarouselAdmin)
 admin.site.register(Address)
 admin.site.register(UserProd,UserAdmin)
 admin.site.register(CarCategory)

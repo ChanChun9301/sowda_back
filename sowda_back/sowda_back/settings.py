@@ -16,7 +16,7 @@ ALLOWED_HOSTS = ['*']
 # try:
 #     HOSTNAME = socket.gethostname()
 # except:
-HOSTNAME = 'http://192.168.0.103:8000'
+HOSTNAME = 'http://10.10.73.81:8000'
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'ckeditor',
     'django_filters',
     # "debug_toolbar",
     # 'rest_framework.authtoken',
@@ -119,8 +120,9 @@ MEDIA_URL='/media/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    # 'PAGE_SIZE': 10
 }

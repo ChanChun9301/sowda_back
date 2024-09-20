@@ -1,12 +1,18 @@
-from rest_framework import generics,filters
+from rest_framework import generics,filters, pagination
 from .models import *
 from .serializers import *
 from api.serializers import *
+
+class MyPagination(pagination.PageNumberPagination):
+    page_size = 12
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 
 class CarMainList(generics.ListAPIView):
     queryset = Car.objects.all()
     serializer_class = CarListSerializer
     filter_backends = [filters.SearchFilter]
+    pagination_class = MyPagination
     search_fields = ['name']
     name = 'carmain-list'
 
@@ -24,6 +30,7 @@ class CarAddList(generics.ListAPIView):
     queryset = Car.objects.all()
     serializer_class = CarListSerializer
     filter_backends = [filters.SearchFilter]
+    pagination_class = MyPagination
     search_fields = ['author']
     name = 'car-added-list'
 
@@ -41,6 +48,7 @@ class CarAddList(generics.ListAPIView):
 
 class CarList(generics.ListCreateAPIView):
     queryset = Car.objects.all()
+    pagination_class = MyPagination
     serializer_class = CarSerializer
     name = 'car-list'
 
@@ -51,6 +59,7 @@ class CarDetail(generics.RetrieveDestroyAPIView):
 
 class CarCategoryList(generics.ListAPIView):
     queryset = CarCategory.objects.all()
+    
     serializer_class = CarCategorySerializer
     name = 'carcategory-list'
 
@@ -59,6 +68,7 @@ class CarByCategoryList(generics.ListAPIView):
     queryset = Car.objects.all()
     serializer_class = CarListSerializer
     filter_backends = [filters.SearchFilter]
+    pagination_class = MyPagination
     search_fields = ['category__name']
     name = 'car_by_category-list'
 
@@ -75,6 +85,7 @@ class CarByCategoryList(generics.ListAPIView):
 class CarByAddressList(generics.ListAPIView):
     address=AddressSerializer
     queryset = Car.objects.all()
+    pagination_class = MyPagination
     serializer_class = CarListSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['address__name']

@@ -1,4 +1,4 @@
-from rest_framework import generics,filters
+from rest_framework import generics,filters,status,pagination
 from .models import *
 from .serializers import *
 from rest_framework.response import Response
@@ -9,6 +9,11 @@ from logist.views_serializers import *
 from other.views_serializers import *
 from elin.views_serializers import *
 from rest_framework.views import APIView
+
+class MyPagination(pagination.PageNumberPagination):
+    page_size = 12
+    page_size_query_param = 'page_size'
+    max_page_size = 1000    
 
 class UserPost(generics.ListCreateAPIView):
     queryset = UserProd.objects.all()
@@ -54,12 +59,14 @@ class AddressDetail(generics.RetrieveUpdateDestroyAPIView):
 class AddressList(generics.ListAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
+    
     name = 'address-list'
 #----------------------------
 class NewsList(generics.ListAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializer
     filter_backends = [filters.SearchFilter]
+    pagination_class = MyPagination
     search_fields = ['name']
     name = 'news-list'
 
@@ -88,6 +95,7 @@ class NewsByCategoryList(generics.ListAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializer
     filter_backends = [filters.SearchFilter]
+    pagination_class = MyPagination
     search_fields = ['category__name']
     name = 'news_by_category-list'
 
@@ -119,6 +127,7 @@ class TopProductsList(generics.ListAPIView):
     queryset = TopProducts.objects.all()
     serializer_class = TopProductsSerializer
     filter_backends = [filters.SearchFilter]
+    pagination_class = MyPagination
     search_fields = ['name']
     name = 'topmain-list'
 
@@ -150,10 +159,6 @@ class CarouselDetail(generics.RetrieveAPIView):
     queryset = CarouselImage.objects.all()
     serializer_class = CarouselSerializer
     name = 'carousel-detail'
-
-
-
-
 
 class ApiRoot(generics.GenericAPIView):
     name = 'Seýir'

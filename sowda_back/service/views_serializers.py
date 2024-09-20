@@ -1,13 +1,18 @@
-from rest_framework import generics,filters
+from rest_framework import generics,filters,pagination
 from .models import *
 from .serializers import *
 from api.serializers import *
 
+class MyPagination(pagination.PageNumberPagination):
+    page_size = 12
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 
 class ServiceMainList(generics.ListAPIView):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
     filter_backends = [filters.SearchFilter]
+    pagination_class = MyPagination
     search_fields = ['name']
     name = 'servicemain-list'
 
@@ -23,8 +28,9 @@ class ServiceMainList(generics.ListAPIView):
 
 class ServiceAddList(generics.ListAPIView):
     queryset = Service.objects.all()
-    serializer_class = ServiceSerializer
+    serializer_class = ServiceListSerializer
     filter_backends = [filters.SearchFilter]
+    pagination_class = MyPagination
     search_fields = ['author']
     name = 'service-added-list'
 
@@ -44,6 +50,7 @@ class ServiceAddList(generics.ListAPIView):
 class ServiceList(generics.ListCreateAPIView):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
+    pagination_class = MyPagination
     name = 'service-list'
 
 class ServiceDetail(generics.RetrieveAPIView):
@@ -58,6 +65,7 @@ class ServiceCategoryList(generics.ListAPIView):
 
 class ServiceByCategoryList(generics.ListAPIView):
     category=ServiceCategorySerializer
+    pagination_class = MyPagination
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
     filter_backends = [filters.SearchFilter]
@@ -76,6 +84,7 @@ class ServiceByCategoryList(generics.ListAPIView):
 
 class ServiceByAddressList(generics.ListAPIView):
     address=AddressSerializer
+    pagination_class = MyPagination
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
     filter_backends = [filters.SearchFilter]

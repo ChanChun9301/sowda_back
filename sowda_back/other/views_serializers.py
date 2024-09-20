@@ -1,12 +1,17 @@
-from rest_framework import generics,filters
+from rest_framework import generics,filters,pagination
 from .models import *
 from .serializers import *
 from api.serializers import *
 
+class MyPagination(pagination.PageNumberPagination):
+    page_size = 12
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 #------------------------------------
 class OtherMainList(generics.ListAPIView):
     queryset = Other.objects.all()
     serializer_class = OtherSerializer
+    pagination_class = MyPagination
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
     name = 'othermain-list'
@@ -23,7 +28,8 @@ class OtherMainList(generics.ListAPIView):
 
 class OtherAddList(generics.ListAPIView):
     queryset = Other.objects.all()
-    serializer_class = OtherSerializer
+    serializer_class = OtherListSerializer
+    pagination_class = MyPagination
     search_fields = ['author']
     name = 'other-added-list'
 
@@ -41,6 +47,7 @@ class OtherAddList(generics.ListAPIView):
 
 class OtherList(generics.ListCreateAPIView):
     queryset = Other.objects.all()
+    pagination_class = MyPagination
     serializer_class = OtherSerializer
     name = 'other-list'
 
@@ -57,6 +64,7 @@ class OtherCategoryList(generics.ListAPIView):
 class OtherByCategoryList(generics.ListAPIView):
     category=OtherCategorySerializer
     queryset = Other.objects.all()
+    pagination_class = MyPagination
     serializer_class = OtherSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['category__name']
@@ -74,6 +82,7 @@ class OtherByCategoryList(generics.ListAPIView):
 
 class OtherByAddressList(generics.ListAPIView):
     address=AddressSerializer
+    pagination_class = MyPagination
     queryset = Other.objects.all()
     serializer_class = OtherSerializer
     filter_backends = [filters.SearchFilter]

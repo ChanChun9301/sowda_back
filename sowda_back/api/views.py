@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from logist.models import Logist
-from other.models import Other
-from service.models import Service
-from elin.models import Elin
-from car.models import Car
-from .models import News
+from logist.models import *
+from other.models import *
+from service.models import *
+from elin.models import *
+from car.models import *
+from .models import *
 
 def index(request):
     logist = Logist.objects.all()[:8]
@@ -32,9 +32,12 @@ def logist(request):
 
 def logist_detail(request,pk):
     logist = Logist.objects.get(pk=pk)
+    images = ImageLogist.objects.filter(logist__pk=pk)
     context = {
         'logist':logist,
+        'images':images,
     }
+    print(images)
     return render(request,'logist_detail.html',context)
 
 def car(request):

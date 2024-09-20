@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from django.conf import settings
+import os
 from .models import *
 
 
@@ -28,7 +30,6 @@ class LogistListSerializer(serializers.ModelSerializer):
         model = Logist
         fields = ('pk', 'name', 'text','phone','price','created','last_date','where','nirden','bring','vip','img','checked','address_name','category_name')
 
-
 class LogistSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source='category.id')
     address = serializers.CharField(source='address.id')
@@ -37,14 +38,14 @@ class LogistSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         address_data = validated_data.pop('address')
         category_data = validated_data.pop('category')
-        category_id = category_data['id']
-        address_id = address_data['id']
         images_data = validated_data.pop('images')
-        category = LogistCategory.objects.get(id=int(category_id))
-        address = Address.objects.get(id=int(address_id))
+        category = LogistCategory.objects.get(id=int(category_data['id']))
+        address = Address.objects.get(id=int(address_data['id']))
         logist = Logist.objects.create(category=category,address=address,**validated_data)
-        for image in images_data:
-            ImageLogist.objects.create(logist=logist, img=image)
+
+        if images_data:
+            for image in images_data:
+                ImageLogist.objects.create(logist=logist, img=image)
 
         
         return logist

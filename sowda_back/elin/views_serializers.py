@@ -1,13 +1,18 @@
-from rest_framework import generics,filters
+from rest_framework import generics,filters,pagination
 from .models import *
 from .serializers import *
 from api.serializers import *
 
+class MyPagination(pagination.PageNumberPagination):
+    page_size = 12
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 
 class ElinMainList(generics.ListAPIView):
     queryset = Elin.objects.all()
     serializer_class = ElinSerializer
     filter_backends = [filters.SearchFilter]
+    pagination_class = MyPagination
     search_fields = ['name']
     name = 'elinmain-list'
 
@@ -23,8 +28,9 @@ class ElinMainList(generics.ListAPIView):
 
 class ElinAddList(generics.ListAPIView):
     queryset = Elin.objects.all()
-    serializer_class = ElinSerializer
+    serializer_class = ElinListSerializer
     filter_backends = [filters.SearchFilter]
+    pagination_class = MyPagination
     search_fields = ['author']
     name = 'elin-added-list'
 
@@ -44,6 +50,7 @@ class ElinAddList(generics.ListAPIView):
 class ElinList(generics.ListCreateAPIView):
     queryset = Elin.objects.all()
     serializer_class = ElinSerializer
+    pagination_class = MyPagination
     name = 'elin-list'
 
 class ElinDetail(generics.RetrieveDestroyAPIView):
@@ -61,6 +68,7 @@ class ElinByCategoryList(generics.ListAPIView):
     queryset = Elin.objects.all()
     serializer_class = ElinSerializer
     filter_backends = [filters.SearchFilter]
+    pagination_class = MyPagination
     search_fields = ['category__name']
     name = 'elin_by_category-list'
 
@@ -78,6 +86,7 @@ class ElinByAddressList(generics.ListAPIView):
     address=AddressSerializer
     queryset = Elin.objects.all()
     serializer_class = ElinSerializer
+    pagination_class = MyPagination
     filter_backends = [filters.SearchFilter]
     search_fields = ['address__name']
     name = 'elin_by_address-list'

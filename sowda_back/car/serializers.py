@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from django.conf import settings
+import os
 from .models import *
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -32,14 +34,14 @@ class CarSerializer(serializers.ModelSerializer):
     address = serializers.CharField(source='address.id')
     images = serializers.ListField(child=serializers.ImageField(), write_only=True)
     def create(self, validated_data):
+        print(validated_data)
         address_data = validated_data.pop('address')
         category_data = validated_data.pop('category')
         images_data = validated_data.pop('images')
-        category_id = category_data['id']
-        address_id = address_data['id']
-        category = CarCategory.objects.get(id=int(category_id))
-        address = Address.objects.get(id=int(address_id))
+        category = CarCategory.objects.get(id=int(category_data['id']))
+        address = Address.objects.get(id=int(address_data['id']))
         car = Car.objects.create(category=category,address=address,**validated_data)
+        
         for image in images_data:
             ImageCar.objects.create(car=car, img=image)
 
@@ -48,4 +50,5 @@ class CarSerializer(serializers.ModelSerializer):
         
     class Meta:
         model = Car
-        fields = ('pk', 'name', 'address','author','text','phone','price','created','img','category','images')
+        fields = ('pk', 'name', 'address','author','text','phone',
+        'price','created','img','category','images')

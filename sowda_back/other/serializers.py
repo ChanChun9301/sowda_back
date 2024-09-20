@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from django.conf import settings
+import os
 from .models import *
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -18,7 +20,7 @@ class OtherDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Other
-        fields = ('pk', 'name', 'address_name','text','category_name','phone','price','created','img','images','checked')
+        fields = ('pk', 'name', 'address','text','category','phone','price','created','img','images','checked')
 
 class OtherListSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source='category.name')
@@ -36,10 +38,8 @@ class OtherSerializer(serializers.ModelSerializer):
         address_data = validated_data.pop('address')
         category_data = validated_data.pop('category')
         images_data = validated_data.pop('images')
-        category_id = category_data['id']
-        address_id = address_data['id']
-        category = OtherCategory.objects.get(id=int(category_id))
-        address = Address.objects.get(id=int(address_id))
+        category = OtherCategory.objects.get(id=int(category_data['id']))
+        address = Address.objects.get(id=int( address_data['id']))
         other = Other.objects.create(category=category,address=address,**validated_data)
         for image in images_data:
             ImageOther.objects.create(other=other, img=image)
