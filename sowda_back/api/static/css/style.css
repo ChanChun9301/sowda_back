@@ -237,8 +237,12 @@ button {
 
 .navbar-light .navbar-nav .nav-link {
     color: #fff;
-    font-size: 18px;
+    font-size: 16px;
     padding: 10px 20px 10px 20px;
+}
+
+.navbar-light .navbar-nav .nav-link-little {
+    font-size: 16px;
 }
 
 .navbar-light .navbar-nav .nav-link:focus,
@@ -252,7 +256,7 @@ button {
 }
 
 .navbar {
-    padding: 15px 65px;
+    padding: 10px 10px;
 }
 
 .search_icon {

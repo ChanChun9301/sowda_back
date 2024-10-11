@@ -1,14 +1,19 @@
 from django.db import models
 from django.conf import settings
 from ckeditor.fields import RichTextField
+from django.contrib.auth.models import AbstractUser
+from django.utils.translation import gettext_lazy as _
 
-class UserProd(models.Model):
-    author = models.CharField(max_length=8,null=True,verbose_name='Awtor')
+
+class UserProd(AbstractUser):
+    username = models.CharField(max_length=255,null=True,unique=True,)
+    password = models.CharField(max_length=255,null=True)
     checked = models.BooleanField(default=False,verbose_name='Barlandy')
     
     class Meta:
         verbose_name = ("Ulanyjy")
         verbose_name_plural = ("Ulanyjylar")
+
 
 class CarouselImage(models.Model):
     name = models.CharField(max_length=150,verbose_name='Ady')

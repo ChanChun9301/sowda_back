@@ -5,8 +5,13 @@ from service.models import *
 from elin.models import *
 from car.models import *
 from .models import *
+from .functions import hash_password
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 
 def index(request):
+    user = UserProd.objects.get(username=request.user.username)
+    token,created =Token.objects.get_or_create(user=user)
     logist = Logist.objects.all()[:8]
     car = Car.objects.all()[:8]
     other = Other.objects.all()[:8]
@@ -20,6 +25,7 @@ def index(request):
         'other':other,
         'service':service,
         'news':news,
+        'token':token
     }
     return render(request,'index.html',context)
 

@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'django_filters',
     # "debug_toolbar",
-    # 'rest_framework.authtoken',
+    'rest_framework.authtoken',
 
     'api',
     'car',
@@ -112,6 +112,8 @@ LANGUAGE_CODE = 'ru-ru'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+
+AUTH_USER_MODEL = 'api.UserPRod'
 
 STATIC_URL = '/static/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')

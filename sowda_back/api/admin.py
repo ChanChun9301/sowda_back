@@ -7,6 +7,9 @@ from logist.models import *
 from car.models import *
 from django.utils.safestring import mark_safe
 from django.contrib.admin.views.main import ChangeList
+from django.urls import reverse
+from django.contrib.admin.utils import quote
+from django.utils.translation import gettext_lazy as _
 
 class LogistImageInline(admin.StackedInline):
     model = ImageLogist
@@ -119,21 +122,20 @@ class CarouselAdmin(admin.ModelAdmin):
         else:
             return 'Surat goyulmadyk'
 
-class UserAdmin(admin.ModelAdmin):
-    list_display=('author','checked')
+
 
 admin.site.register(TopProducts, TopProductsAdmin)
 admin.site.register(ImageTop)
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(CarouselImage,CarouselAdmin)
 admin.site.register(Address)
-admin.site.register(UserProd,UserAdmin)
 admin.site.register(CarCategory)
 admin.site.register(ElinCategory)
 admin.site.register(LogistCategory)
 admin.site.register(ServiceCategory)
 admin.site.register(NewsCategory)
 admin.site.register(OtherCategory)
+admin.site.register(UserProd)
 
 admin.site.site_title = 'Seýir'
 admin.site.site_header = 'Seýir'

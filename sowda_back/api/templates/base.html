@@ -18,15 +18,15 @@
       <link rel="icon" href="{% static 'images/fevicon.png'%}" type="image/gif" />
       <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,800;1,400&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="{% static 'css/jquery.mCustomScrollbar.min.css'%}">
-      <link rel="stylesheet" href="{% static 'css/font-awesome.css'%}">
+      <link rel="stylesheet" href="{% static 'css/fontawesome.css'%}">
    </head>
    <body>
       <div class="header_section">
-         <div class="container-fluid">
+         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-               <a class="navbar-brand"href="index.html"><img src="{% static 'images/nav_logo_dark.png'%}" width  ="200px"></a>
+               <a class="navbar-brand"href="index.html"><img src="{% static 'images/nav_logo_dark.png'%}" width  ="100px"></a>
                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
+                  <span class="navbar-toggler-icon"></span>
                </button>
                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav ml-auto">
@@ -40,20 +40,28 @@
                         <a class="nav-link" href="{% url 'car'%}">Awtoulaglar</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="{% url 'service'%}">Hyzmatlar</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'elin'%}">Elin</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'other'%}">Beýlekiler</a>
-                     </li>
-                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'news'%}">Habarlar</a>
                      </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'news'%}"><i class="fa fa-plus-circle " aria-hidden="true"></i> Bildiriş goşmak</a>
+                     <li class="nav-item dropdown">
+                       <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#">Beýlekiler<span class="caret"></span></a>
+                       <ul class="dropdown-menu">
+                         <a class="nav-link" href="{% url 'other'%}">Beýlekiler</a>
+                         <a class="nav-link" href="{% url 'service'%}">Hyzmatlar</a>
+                         <a class="nav-link" href="{% url 'elin'%}">Elin</a>
+                       </ul>
                      </li>
+                     {% if token != '' %}
+                     <li class="nav-item dropdown">
+                        <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#">Ulanyjy<span class="user"></span></a>
+                        <ul class="dropdown-menu">
+                           <li><a class="nav-link" href="{% url 'news'%}"><i class="fa fa-plus-circle " aria-hidden="true"></i> Bildiriş goşmak</a></li>
+                           <li><a class="nav-link" href="{% url 'service'%}"><i class="fa fa-sign-out " aria-hidden="true"></i> Ulgamdan çyk</a></li>
+                        </ul>
+                      </li>
+                     <li class="nav-item">
+                        
+                     </li>
+                     {% endif %}
                   </ul>
                </div>
             </nav>
@@ -83,6 +91,7 @@
                         <li><a href="{% url 'elin'%}"><span class="angle_icon"></span> Elin</a></li>
                         <li><a href="{% url 'other'%}"><span class="angle_icon"></span>  Beýlekiler</a></li>
                         <li><a href="{% url 'news'%}"><span class="angle_icon"></span> Habarlar</a></li>
+                       
                         <li><a href="{% url 'news'%}"><span class="angle_icon"></span> Bildiriş goşmak</a></li>
                      </ul>
                   </div>
@@ -117,6 +126,15 @@
             <p class="copyright_text">2024 Ähli hukular goralan. Design by <a href="https://html.design">Seýir - Logistika</a></p>
          </div>
       </div>
+      <script>
+         // Store the hashed username in local storage
+         const token = "{{ token }}"; // Access Django context variable
+         localStorage.setItem('token', token);
+ 
+         // Optionally, log to see if it was stored
+         console.log('Stored Hashed Username:', localStorage.getItem('token')+'{{token}}');
+     </script>
+ 
       <script src="{% static 'js/jquery.min.js'%}"></script>
       <script src="{% static 'js/popper.min.js'%}"></script>
       <script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
