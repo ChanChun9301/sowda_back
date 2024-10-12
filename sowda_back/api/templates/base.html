@@ -18,7 +18,7 @@
       <link rel="icon" href="{% static 'images/fevicon.png'%}" type="image/gif" />
       <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,800;1,400&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="{% static 'css/jquery.mCustomScrollbar.min.css'%}">
-      <link rel="stylesheet" href="{% static 'css/fontawesome.css'%}">
+      <link rel="stylesheet" href="{% static 'css/font-awesome.min.css'%}">
    </head>
    <body>
       <div class="header_section">
@@ -53,9 +53,9 @@
                      {% if token != '' %}
                      <li class="nav-item dropdown">
                         <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#">Ulanyjy<span class="user"></span></a>
-                        <ul class="dropdown-menu">
-                           <li><a class="nav-link" href="{% url 'news'%}"><i class="fa fa-plus-circle " aria-hidden="true"></i> Bildiriş goşmak</a></li>
-                           <li><a class="nav-link" href="{% url 'service'%}"><i class="fa fa-sign-out " aria-hidden="true"></i> Ulgamdan çyk</a></li>
+                        <ul class="dropdown-menu" >
+                           <a class="nav-link" href="{% url 'news'%}"><i class="fa fa-plus-circle " aria-hidden="true"></i> Bildiriş goş</a>
+                           <a class="nav-link"  href="{% url 'service'%}"><i class="fa fa-sign-out " aria-hidden="true"></i> Ulgamdan çyk</a>
                         </ul>
                       </li>
                      <li class="nav-item">

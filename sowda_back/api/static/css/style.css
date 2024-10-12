@@ -201,7 +201,7 @@ button {
 }
 
 .layout_padding {
-    padding-top: 100px;
+    padding-top: 10px;
     padding-bottom: 0px;
 }
 
@@ -243,6 +243,8 @@ button {
 
 .navbar-light .navbar-nav .nav-link-little {
     font-size: 16px;
+    text-align: center;
+    padding: 10px 20px 10px 20px;
 }
 
 .navbar-light .navbar-nav .nav-link:focus,
@@ -1034,11 +1036,4 @@ p.dummy_text {
 
 .copyright_text a:hover {
     color: #00a651;
-}
-
-
-/* copyright section end */
-
-.margin_bottom90 {
-    margin-bottom: 90px;
 }
