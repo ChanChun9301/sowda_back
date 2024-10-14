@@ -80,10 +80,10 @@ class NewsCategory(models.Model):
         return self.name
 
 def image_add_habar(self,filename):
-    return f'habarlar/{self.created}-{self.name}/{filename}'
+    return f'habarlar/{self.created}-{self.name[:50]}/{filename}'
 
 class News(models.Model):
-    name = models.CharField(null=True, max_length=100,verbose_name='Ady')
+    name = models.CharField(null=True, max_length=500,verbose_name='Ady')
     author = models.CharField(max_length=150,null=True,verbose_name='Awtor')
     category = models.ForeignKey(NewsCategory,on_delete=models.CASCADE,verbose_name='Kategoriýa')
     img = models.ImageField(upload_to=image_add_habar,null=True,verbose_name='Surat')

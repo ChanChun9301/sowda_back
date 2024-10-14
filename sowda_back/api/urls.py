@@ -5,6 +5,7 @@ from logist.views_serializers import *
 from car.views_serializers import *
 from elin.views_serializers import *
 from other.views_serializers import *
+from django.contrib.auth.views import LogoutView
 from service.views_serializers import *
 
 urlpatterns = [
@@ -21,6 +22,8 @@ urlpatterns = [
     path('app/service/<int:pk>/',service_detail,name='service'),
     path('app/news/',news,name='news'),
     path('app/news/<int:pk>/',news_detail,name='news'),
+    path('app/logout/',LogoutView.as_view(),name='logout'),
+    path('app/login/',login,name='login_in'),
 
 
     re_path(r'^userprod-list/$', UserCreate.as_view(), name=UserCreate.name),

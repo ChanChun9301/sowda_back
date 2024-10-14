@@ -10,8 +10,13 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
 def index(request):
-    user = UserProd.objects.get(username=request.user.username)
-    token,created =Token.objects.get_or_create(user=user)
+    # user = UserProd.objects.get(username=request.user.username)
+    # token,created =Token.objects.get(user=user)
+    try:
+        user = UserProd.objects.get(username=request.user.username)
+        token, created = Token.objects.get_or_create(user=user)
+    except UserProd.DoesNotExist:
+        token = None
     logist = Logist.objects.all()[:8]
     car = Car.objects.all()[:8]
     other = Other.objects.all()[:8]
@@ -35,6 +40,9 @@ def logist(request):
         'logist':logist,
     }
     return render(request,'logist.html',context)
+
+def login(request):
+    return render(request,'auth/login.html',{})
 
 def logist_detail(request,pk):
     logist = Logist.objects.get(pk=pk)
