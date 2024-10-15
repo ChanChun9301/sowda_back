@@ -6,7 +6,6 @@
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="viewport" content="initial-scale=1, maximum-scale=1">
       <title>{% block title %}{% endblock %}</title>
       <meta name="keywords" content="">
@@ -52,7 +51,7 @@
                      </li>
                      {% if token != None %}
                      <li class="nav-item dropdown">
-                        <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#">Ulanyjy<span class="user"></span></a>
+                        <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#">{{user}}<span class="user"></span></a>
                         <ul class="dropdown-menu" >
                            <a class="nav-link" href="{% url 'news'%}"><i class="fa fa-plus-circle " aria-hidden="true"></i> Bildiriş goş</a>
                            <a class="nav-link"  href="{% url 'logout' %}"><i class="fa fa-sign-out " aria-hidden="true"></i> Ulgamdan çyk</a>

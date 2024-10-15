@@ -24,8 +24,10 @@ class UserPost(generics.ListCreateAPIView):
 
 class UserCreate(APIView):
     name = 'userprod-list'
+    template_name = 'auth/login.html'
     def post(self, request):
         data = request.data
+        print(data)
         if UserProd.objects.filter(author=data['author']).exists():
             return Response({'author': data['author']})
         serializer = UserSerializer(data=data)

@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate, login
 from logist.models import *
 from other.models import *
 from service.models import *
@@ -13,8 +14,8 @@ def index(request):
     # user = UserProd.objects.get(username=request.user.username)
     # token,created =Token.objects.get(user=user)
     try:
-        user = UserProd.objects.get(username=request.user.username)
-        token, created = Token.objects.get_or_create(user=user)
+        user = UserProd.objects.get(author='')
+        # token, created = Token.objects.get_or_create(user=user)
     except UserProd.DoesNotExist:
         token = None
     logist = Logist.objects.all()[:8]
@@ -22,7 +23,8 @@ def index(request):
     other = Other.objects.all()[:8]
     news = News.objects.all()[:8]
     service = Service.objects.all()[:8]
-    elin = Elin.objects.all()[:8]   
+    elin = Elin.objects.all()[:8]
+    carousel = CarouselImage.objects.all()   
     context = {
         'car':car,
         'logist':logist,
@@ -30,7 +32,8 @@ def index(request):
         'other':other,
         'service':service,
         'news':news,
-        'token':token
+        'carousel':carousel,
+        'token':'token'
     }
     return render(request,'index.html',context)
 
@@ -41,8 +44,20 @@ def logist(request):
     }
     return render(request,'logist.html',context)
 
-def login(request):
-    return render(request,'auth/login.html',{})
+# def login(request):
+#     if request.method == 'POST':
+#         token = request.POST.get('username')
+#         # user = authenticate(request, username=username)
+
+#         if UserProd.objects.filter(author=token).exists():
+#             return render(request,'index.html',{'token':token})
+#         # if():
+
+#         else:
+#             error_message = 'Invalid username or password'
+#             return render(request, 'auth/login.html', {'error_message': error_message})
+    
+#     return render(request, 'auth/login.html')
 
 def logist_detail(request,pk):
     logist = Logist.objects.get(pk=pk)

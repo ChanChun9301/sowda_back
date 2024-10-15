@@ -1,13 +1,11 @@
 from django.db import models
 from django.conf import settings
 from ckeditor.fields import RichTextField
-from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
 
-class UserProd(AbstractUser):
-    username = models.CharField(max_length=255,null=True,unique=True,)
-    password = models.CharField(max_length=255,null=True)
+class UserProd(models.Model):
+    author = models.CharField(max_length=255,null=True)
     checked = models.BooleanField(default=False,verbose_name='Barlandy')
     
     class Meta:

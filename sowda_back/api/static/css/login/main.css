@@ -294,11 +294,11 @@ iframe {
 }
 
 .input100:focus + .focus-input100::after {
-  color: #a64bf4;
+  color: #07a96d;
 }
 
 .has-val.input100 + .focus-input100::after {
-  color: #a64bf4;
+  color: #07a96d;
 }
 
 
@@ -336,10 +336,10 @@ iframe {
   width: 300%;
   height: 100%;
   background: #a64bf4;
-  background: -webkit-linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
-  background: -o-linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
-  background: -moz-linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
-  background: linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
+  background: -webkit-linear-gradient(right, #00dbde, #07a96d, #00dbde, #07a96d);
+  background: -o-linear-gradient(right, #00dbde, #07a96d, #00dbde, #07a96d);
+  background: -moz-linear-gradient(right, #00dbde, #07a96d, #00dbde, #07a96d);
+  background: linear-gradient(right, #00dbde, #07a96d, #00dbde, #07a96d);
   top: 0;
   left: -100%;
 
