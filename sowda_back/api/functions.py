@@ -7,7 +7,7 @@ import bcrypt
 def user_created(sender, instance, created, **kwargs):
     if created:
         # Perform any actions you want to take when a new product is created
-        print(f"Täze ulanyjy: {instance.username}")
+        print(f"Täze ulanyjy: {instance.author}")
 
 def hash_password(password):
     password_bytes = password.encode('utf-8')

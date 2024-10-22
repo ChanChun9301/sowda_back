@@ -22,7 +22,7 @@ urlpatterns = [
     path('app/service/<int:pk>/',service_detail,name='service'),
     path('app/news/',news,name='news'),
     path('app/news/<int:pk>/',news_detail,name='news'),
-    path('app/logout/',LogoutView.as_view(),name='logout'),
+    # path('app/logout/',LogoutView.as_view(),name='logout'),
     path('app/login/',UserCreate.as_view(), name='login_in'),
 
 
