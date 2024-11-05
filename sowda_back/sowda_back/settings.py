@@ -3,19 +3,16 @@ from django.templatetags.static import static
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 import socket
+from datetime import timedelta 
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-z6el!rs_1beoky0^2#q1iof)2$eqlsua43_=%ubt&d&4*-oyz4'
 DEBUG = True
-ALLOWED_HOSTS = ['*']
-# ALLOWED_HOSTS = ['127.0.0.1','localhost','10.10.73.56']
+# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','10.10.73.81']
 
-
-# try:
-#     HOSTNAME = socket.gethostname()
-# except:
 HOSTNAME = 'http://10.10.73.81:8000'
 
 INSTALLED_APPS = [
@@ -32,6 +29,7 @@ INSTALLED_APPS = [
     'django_filters',
     # "debug_toolbar",
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
 
     'api',
     'car',
@@ -84,9 +82,9 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "http://localhost:57793",
-    "http://127.0.0.1:57793",
-    "http://192.168.0.103:8000",
+    "http://localhost:21992",
+    "http://127.0.0.1:21992",
+    # "http://192.168.0.103:8000",
 ]
 
 INTERNAL_IPS = [
@@ -124,7 +122,23 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+
     # 'PAGE_SIZE': 10
+}
+
+SIMPLE_JWT = {
+
+    'ROTATE_REFRESH_TOKENS': True,
+
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=60),
+
 }
 
 LOGOUT_REDIRECT_URL = "/app/"

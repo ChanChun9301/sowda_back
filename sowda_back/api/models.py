@@ -12,6 +12,9 @@ class UserProd(models.Model):
         verbose_name = ("Ulanyjy")
         verbose_name_plural = ("Ulanyjylar")
 
+    def __str__(self):
+        return f'id:{self.id} - {self.author}'
+
 
 class CarouselImage(models.Model):
     name = models.CharField(max_length=150,verbose_name='Ady')

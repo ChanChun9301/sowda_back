@@ -5,6 +5,10 @@ from rest_framework import serializers
 from .models import *
 from .functions import user_created
 
+class RefreshSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarouselImage
+        fields = ('user_id', 'username')
 
 class CarouselSerializer(serializers.ModelSerializer):
     class Meta:

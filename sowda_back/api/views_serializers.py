@@ -9,6 +9,7 @@ from logist.views_serializers import *
 from other.views_serializers import *
 from elin.views_serializers import *
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class MyPagination(pagination.PageNumberPagination):
     page_size = 12
@@ -22,14 +23,12 @@ class UserPost(generics.ListCreateAPIView):
     search_fields = ['author']
     name = 'userprod-list'
 
+
 class UserCreate(APIView):
     name = 'userprod-list'
     template_name = 'auth/login.html'
     def post(self, request):
         data = request.data
-        print(data)
-        if UserProd.objects.filter(author=data['author']).exists():
-            return Response({'author': data['author']})
         serializer = UserSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -41,13 +40,14 @@ class UserCreate(APIView):
 class UserProdDetailView(APIView):
     def get(self, request):
         author = request.GET.get('author')
+        user_id = request.GET.get('user_id')
         if author:
             try:
-                check = UserProd.objects.get(author=author)
+                check = UserProd.objects.get(author=author,id=user_id)
                 if UserProd.objects.filter(author=author).exists():
                     if (UserProd.objects.filter(checked=True)):
-                        return Response({'token': check.checked})
-                return Response({'token': check.checked})
+                        return Response({'token': check.checked,'id':check.id})
+                return Response({'token': check.checked,'id':check.id})
             except UserProd.DoesNotExist:
                 return Response({'token': False})
         else:

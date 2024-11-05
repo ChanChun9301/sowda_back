@@ -1,23 +1,39 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login
+from rest_framework.response import Response
+from rest_framework import generics,filters,status,pagination
 from logist.models import *
 from other.models import *
 from service.models import *
 from elin.models import *
 from car.models import *
 from .models import *
+from .serializers import *
 from .functions import hash_password
+from django.contrib import messages
 from django.contrib.auth.models import User
+from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 
 def index(request):
-    # user = UserProd.objects.get(username=request.user.username)
-    # token,created =Token.objects.get(user=user)
-    try:
-        user = UserProd.objects.get(author='')
-        # token, created = Token.objects.get_or_create(user=user)
-    except UserProd.DoesNotExist:
-        token = None
+    author = request.GET.get('author')
+    user_id = request.GET.get('user_id')
+    id=0
+    token=False
+    if author:
+        try:
+            check = UserProd.objects.get(author=author,id=user_id)
+            if UserProd.objects.filter(author=author).exists():
+                if (UserProd.objects.filter(checked=True)):
+                    token = check.checked
+                    id=check.id
+                token = check.checked
+                id=check.id
+        except UserProd.DoesNotExist:
+            token=False
+    else:
+        token:False
+
     logist = Logist.objects.all()[:8]
     car = Car.objects.all()[:8]
     other = Other.objects.all()[:8]
@@ -33,8 +49,10 @@ def index(request):
         'service':service,
         'news':news,
         'carousel':carousel,
-        'token':'token'
+        'token':token,
+        'id':id,
     }
+    print(context)
     return render(request,'index.html',context)
 
 def logist(request):
@@ -44,20 +62,52 @@ def logist(request):
     }
     return render(request,'logist.html',context)
 
-# def login(request):
-#     if request.method == 'POST':
-#         token = request.POST.get('username')
-#         # user = authenticate(request, username=username)
+def webUserCreate(request):
+    if request.method == 'POST':
+        author = request.POST.get('author')
+        if author:
+            author = author[-8:]
+            print(author)
+            try:
+                # Create the user
+                user = UserProd.objects.create(author=author)
+                user.save()
+                messages.success(request, 'User created successfully!')
+                return redirect('index')  # Redirect to the login page or another page
+            except Exception as e:
+                messages.error(request, str(e))
+                return render(request, 'auth/login.html')
+        else:
+            messages.error(request, 'All fields are required.')
+            return render(request, 'auth/login.html')
+    return render(request, 'auth/login.html')
 
-#         if UserProd.objects.filter(author=token).exists():
-#             return render(request,'index.html',{'token':token})
-#         # if():
+class UserProdDetailView(APIView):
+    def post(self, request):
+        author = request.data.get('author')  # Use request.data for POST
+        user_id = request.data.get('user_id')  # Use request.data for POST
 
-#         else:
-#             error_message = 'Invalid username or password'
-#             return render(request, 'auth/login.html', {'error_message': error_message})
-    
-#     return render(request, 'auth/login.html')
+        context = {
+            'token': False,
+            'id': None,
+        }
+
+        if author:
+            try:
+                check = UserProd.objects.get(author=author, id=user_id)
+                context['token'] = check.checked
+                context['id'] = check.id
+
+                # Check if any UserProd is checked
+                if UserProd.objects.filter(checked=True).exists():
+                    return render(request, 'your_template.html', context)
+                
+                return render(request, 'your_template.html', context)
+            except UserProd.DoesNotExist:
+                return render(request, 'your_template.html', context)
+        else:
+            return render(request, 'your_template.html', context)
+
 
 def logist_detail(request,pk):
     logist = Logist.objects.get(pk=pk)
