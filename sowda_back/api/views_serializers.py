@@ -11,11 +11,6 @@ from elin.views_serializers import *
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
-class MyPagination(pagination.PageNumberPagination):
-    page_size = 12
-    page_size_query_param = 'page_size'
-    max_page_size = 1000    
-
 class UserPost(generics.ListCreateAPIView):
     queryset = UserProd.objects.all()
     serializer_class = UserSerializer
@@ -23,13 +18,14 @@ class UserPost(generics.ListCreateAPIView):
     search_fields = ['author']
     name = 'userprod-list'
 
-
 class UserCreate(APIView):
     name = 'userprod-list'
     template_name = 'auth/login.html'
     def post(self, request):
         data = request.data
         serializer = UserSerializer(data=data)
+        if UserProd.objects.filter(author=data.get('author')).exists():
+            return Response({'error': 'Ulanyjy bir eyyam bar.'},status=status.HTTP_201_CREATED)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -38,23 +34,33 @@ class UserCreate(APIView):
 
 class UserLogout(APIView):
     name = 'user-logout'
-    queryset = UserProd.objects.all()
-    serializer_class = UserSerializer
+
+    def post(self, request):
+        data = request.data
+        # serializer = UserSerializer(data=data)
+        print('>>>?????'+str(data))
+        try:
+            checked = UserProd.objects.filter(author=data.get('author')).exists()
+            user = UserProd.objects.get(author=data.get('author'))
+            print('>>>>>>'+str(user.checked)) 
+            if checked:
+                user.checked = False
+                user.save()
+                return Response({'success': 'Ulanyjy ulgamdan cykdy.'},status=status.HTTP_200_OK)
+        except:
+            return Response({'error': 'Ulgamdan cykmak yerine yetmedi.'},status=status.HTTP_400_BAD_REQUEST)
 
 class UserProdDetailView(APIView):
+    
     def get(self, request):
         author = request.GET.get('author')
-        user_id = request.GET.get('user_id')
-        if author:
-            try:
-                check = UserProd.objects.get(author=author,id=user_id)
-                if UserProd.objects.filter(author=author).exists():
-                    if (UserProd.objects.filter(checked=True)):
-                        return Response({'token': check.checked,'id':check.id})
-                return Response({'token': check.checked,'id':check.id})
-            except UserProd.DoesNotExist:
-                return Response({'token': False})
-        else:
+        try:
+            check = UserProd.objects.get(author=author)
+            if UserProd.objects.filter(author=author).exists():
+                if (UserProd.objects.filter(checked=True)):
+                    return Response({'token': check.checked})
+            return Response({'token': check.checked})
+        except UserProd.DoesNotExist:
             return Response({'token': False})
 
 class AddressDetail(generics.RetrieveUpdateDestroyAPIView):

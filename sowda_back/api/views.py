@@ -17,20 +17,16 @@ from rest_framework.authtoken.models import Token
 
 def index(request):
     author = request.GET.get('author')
-    user_id = request.GET.get('user_id')
     print(author)
-    print(user_id)
     id=0
     token=False
     if author:
         try:
-            check = UserProd.objects.get(author=author,id=user_id)
+            check = UserProd.objects.get(author=author)
             if UserProd.objects.filter(author=author).exists():
                 if (UserProd.objects.filter(checked=True)):
                     token = check.checked
-                    id=check.id
                 token = check.checked
-                id=check.id
         except UserProd.DoesNotExist:
             token=False
     else:
@@ -83,31 +79,31 @@ def webUserCreate(request):
             return render(request, 'auth/login.html')
     return render(request, 'auth/login.html')
 
-class UserProdDetailView(APIView):
-    def post(self, request):
-        author = request.data.get('author')  # Use request.data for POST
-        user_id = request.data.get('user_id')  # Use request.data for POST
+# class UserProdDetailView(APIView):
+#     def post(self, request):
+#         author = request.data.get('author')  # Use request.data for POST
+#         user_id = request.data.get('user_id')  # Use request.data for POST
 
-        context = {
-            'token': False,
-            'id': None,
-        }
+#         context = {
+#             'token': False,
+#             'id': None,
+#         }
 
-        if author:
-            try:
-                check = UserProd.objects.get(author=author, id=user_id)
-                context['token'] = check.checked
-                context['id'] = check.id
+#         if author:
+#             try:
+#                 check = UserProd.objects.get(author=author, id=user_id)
+#                 context['token'] = check.checked
+#                 context['id'] = check.id
 
-                # Check if any UserProd is checked
-                if UserProd.objects.filter(checked=True).exists():
-                    return render(request, 'your_template.html', context)
+#                 # Check if any UserProd is checked
+#                 if UserProd.objects.filter(checked=True).exists():
+#                     return render(request, 'your_template.html', context)
                 
-                return render(request, 'your_template.html', context)
-            except UserProd.DoesNotExist:
-                return render(request, 'your_template.html', context)
-        else:
-            return render(request, 'your_template.html', context)
+#                 return render(request, 'your_template.html', context)
+#             except UserProd.DoesNotExist:
+#                 return render(request, 'your_template.html', context)
+#         else:
+#             return render(request, 'your_template.html', context)
 
 
 def logist_detail(request,pk):

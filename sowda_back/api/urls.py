@@ -24,9 +24,9 @@ urlpatterns = [
     path('app/news/<int:pk>/',news_detail,name='news'),
     # path('app/logout/',LogoutView.as_view(),name='logout'),
     path('app/login/',webUserCreate, name='login_in'),
-    path('app/logout/',UserLogout.as_view(), name='logout'),
     # path('app/login/',UserCreate.as_view(), name='login_in'),
 
+    re_path(r'^user-logout/$',UserLogout.as_view(), name='logout'),
     re_path(r'^userprod-list/$', UserCreate.as_view(), name=UserCreate.name),
     re_path(r'^user-check/$', UserProdDetailView.as_view(), name='login'),
 
