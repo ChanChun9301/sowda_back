@@ -36,6 +36,10 @@ class UserCreate(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class UserLogout(APIView):
+    name = 'user-logout'
+    queryset = UserProd.objects.all()
+    serializer_class = UserSerializer
 
 class UserProdDetailView(APIView):
     def get(self, request):

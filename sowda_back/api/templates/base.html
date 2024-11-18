@@ -16,9 +16,9 @@
       <link rel="stylesheet" href="{% static 'css/responsive.css'%}">
       <link rel="icon" href="{% static 'images/favicon.png'%}" type="image/gif" />
       <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,800;1,400&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/bcrypt.js/5.0.1/bcrypt.min.js"></script>
       <link rel="stylesheet" href="{% static 'css/jquery.mCustomScrollbar.min.css'%}">
       <link rel="stylesheet" href="{% static 'css/font-awesome.min.css'%}">
+      <script src="{% static 'js/bcrypt.js'%}"></script>
    </head>
    <body>
       <div class="header_section">
@@ -50,7 +50,7 @@
                          <a class="nav-link" href="{% url 'elin'%}">Elin</a>
                        </ul>
                      </li>
-                     {% if token != None %}
+                     {% if token != False %}
                      <li class="nav-item dropdown">
                         <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#"><span class="user"></span></a>
                         <ul class="dropdown-menu" >
@@ -81,7 +81,7 @@
          <div class="container">
             <div class="row">
                <div class="col-lg-6 col-sm-6">
-                  <h3 class="footer_text">Peýdaly URL-lar</h3>
+                  <h3 class="footer_text">{{token}}{{id}} Peýdaly URL-lar</h3>
                   <div class="footer_menu">
                      <ul>
                         <li class="active"><a href="{% url 'index'%}"><span class="angle_icon active"><i class="fa fa-arrow-right" aria-hidden="true"></i></span> Baş sahypa</a></li>
@@ -126,26 +126,21 @@
             <p class="copyright_text">2024 Ähli hukular goralan. Design by <a href="https://html.design">Seýir - Logistika</a></p>
          </div>
       </div>
+      
       <script>
-         const bcrypt = require('bcryptjs');
-         const token = "{{ token }}"; // Access Django context variable
+         const token = "{{ token }}";
+         const id = "{{ id }}";
+         console.log(token,id);
 
+         // bcrypt.hash(token, 10, (err, hash) => {
+         //    if (err) {
+         //       console.error(err);
+         //       return;
+         //    }
+         //    console.log("Hashed Password:", hash);
 
-         // Hashing the password
-         bcrypt.hash(token, 10, (err, hash) => {
-            if (err) {
-               console.error(err);
-               return;
-            }
-            console.log("Hashed Password:", hash);
-
-            // Store `hash` in your database.
-         });
-
-
-         localStorage.setItem('token', token);
+         // });
  
-         // Optionally, log to see if it was stored
          console.log('Stored Hashed Username:', localStorage.getItem('token')+'{{token}}');
      </script>
  

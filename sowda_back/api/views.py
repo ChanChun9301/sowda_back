@@ -18,6 +18,8 @@ from rest_framework.authtoken.models import Token
 def index(request):
     author = request.GET.get('author')
     user_id = request.GET.get('user_id')
+    print(author)
+    print(user_id)
     id=0
     token=False
     if author:
@@ -52,7 +54,6 @@ def index(request):
         'token':token,
         'id':id,
     }
-    print(context)
     return render(request,'index.html',context)
 
 def logist(request):
@@ -72,7 +73,7 @@ def webUserCreate(request):
                 # Create the user
                 user = UserProd.objects.create(author=author)
                 user.save()
-                messages.success(request, 'User created successfully!')
+                messages.success(request, 'Ulanyjy goşuldy!')
                 return redirect('index')  # Redirect to the login page or another page
             except Exception as e:
                 messages.error(request, str(e))

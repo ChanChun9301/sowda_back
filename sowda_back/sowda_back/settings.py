@@ -85,6 +85,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:21992",
     "http://127.0.0.1:21992",
     # "http://192.168.0.103:8000",
+    
 ]
 
 INTERNAL_IPS = [

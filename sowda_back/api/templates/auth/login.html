@@ -16,6 +16,16 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'vendor/daterangepicker/daterangepicker.css'%}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/login/util.css'%}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/login/main.css'%}">
+	<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js'%}"></script>
+	<script src="{% static 'vendor/animsition/js/animsition.min.js'%}"></script>
+	<script src="{% static 'vendor/bootstrap/js/popper.js'%}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js'%}"></script>
+	<script src="{% static 'vendor/select2/select2.min.js'%}"></script>
+	<script src="{% static 'vendor/daterangepicker/moment.min.js'%}"></script>
+	<script src="{% static 'vendor/daterangepicker/daterangepicker.js'%}"></script>
+	<script src="{% static 'vendor/countdowntime/countdowntime.js'%}"></script>
+	<script src="{% static 'js/main.js'%}"></script>
+	<script src="{% static 'js/bcrypt.js'%}"></script>
 </head>
 <body>
 	
@@ -46,77 +56,61 @@
 	</div>
 	<div id="dropDownSelect1"></div>
 	<script>
-		$(document).ready(function() {
-			$('#userForm').on('submit', function(event) {
-				event.preventDefault(); // Prevent the default form submission
+		// $(document).ready(function() {
+		// 	$('#userForm').on('submit', function(event) {
+		// 		event.preventDefault(); // Prevent the default form submission
 		
-				let authorInput = $('input[name="author"]').val();
-					// Cut off the last 8 characters from the author
-					const author = authorInput.slice(0, -8);
+		// 		let authorInput = $('input[name="author"]').val();
+		// 			// Cut off the last 8 characters from the author
+		// 			const author = authorInput.slice(0, -8);
 
-					const formData = {
-						author: author,
-					};
+		// 			const formData = {
+		// 				author: author,
+		// 			};
 		
-				$.ajax({
-					url: '/api/userprod-list/',  // Adjust this URL to match your API endpoint
-					type: 'POST',
-					data: JSON.stringify(formData),
-					contentType: 'application/json',
-					success: function(data) {
-						// Handle success (e.g., redirect or show success message)
-						alert('User created successfully!');
-						if (data.id) {
-							console.log('User ID:', data.id);
-							// You could store this in local storage or display it
-							localStorage.setItem('userId', data.id);
-						}
-					},
-					error: function(xhr) {
-						// Handle error
-						const errorMsg = xhr.responseJSON ? xhr.responseJSON.author || 'An error occurred.' : 'An error occurred.';
-						$('.error').text(errorMsg);
-					}
-				});
-			});
-		});
-		</script>
-		<script>
-			const bcrypt = require('bcryptjs');
+		// 		$.ajax({
+		// 			url: '/app/login/', 
+		// 			type: 'POST',
+		// 			data: JSON.stringify(formData),
+		// 			contentType: 'application/json',
+		// 			success: function(data) {
+		// 				alert('User created successfully!');
+		// 				if (data.id) {
+		// 					console.log('User ID:', data.id);
+		// 					localStorage.setItem('userId', data.id);
 
+		// 				}
+		// 			},
+		// 			error: function(xhr) {
+		// 				const errorMsg = xhr.responseJSON ? xhr.responseJSON.author || 'An error occurred.' : 'An error occurred.';
+		// 				$('.error').text(errorMsg);
+		// 			}
+		// 		});
+		// 	});
+		// });
+		// const bcrypt = require('bcryptjs');
 			let authorInput = $('input[name="author"]').val();
-					// Cut off the last 8 characters from the author
 			const author = authorInput.slice(0, -8);
 			const token = "{{ token }}"; // Access Django context variable
 			const id = "{{ id }}"; // Access Django context variable
    
+			console.log(author,token,id);
+			// bcrypt.hash(token, 10, (err, hash) => {
+			//    if (err) {
+			// 	  console.error(err);
+			// 	  return;
+			//    }
+			//    console.log("Hashed Password:", hash);
+			// });
    
-			// Hashing the password
-			bcrypt.hash(token, 10, (err, hash) => {
-			   if (err) {
-				  console.error(err);
-				  return;
-			   }
-			   console.log("Hashed Password:", hash);
-   
-			   // Store `hash` in your database.
-			});
-   
-   
-			localStorage.setItem('token', author,'id':id);
-	
-			// Optionally, log to see if it was stored
+			localStorage.setItem('token', authorInput);
+			localStorage.setItem('id',id);
 			console.log('Stored Hashed Username:', localStorage.getItem('token')+'{{token}}');
 		</script>
-	<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js'%}"></script>
-	<script src="{% static 'vendor/animsition/js/animsition.min.js'%}"></script>
-	<script src="{% static 'vendor/bootstrap/js/popper.js'%}"></script>
-	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js'%}"></script>
-	<script src="{% static 'vendor/select2/select2.min.js'%}"></script>
-	<script src="{% static 'vendor/daterangepicker/moment.min.js'%}"></script>
-	<script src="{% static 'vendor/daterangepicker/daterangepicker.js'%}"></script>
-	<script src="{% static 'vendor/countdowntime/countdowntime.js'%}"></script>
-	<script src="{% static 'login/js/main.js'%}"></script>
+		<script>
+			
+		</script>
+	
 
 </body>
 </html>
